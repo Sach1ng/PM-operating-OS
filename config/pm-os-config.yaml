@@ -45,6 +45,8 @@ tools:
   github: false
   # Design
   figma: false
+  # Browser
+  browser: true
   # Data & Analytics
   databricks: false
   snowflake: false

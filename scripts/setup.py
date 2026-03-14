@@ -99,6 +99,11 @@ MCP_CONFIGS = {
         "url": "https://mcp.figma.com/mcp",
         "headers": {},
     },
+    "browser": {
+        "command": "npx",
+        "args": ["@playwright/mcp@latest"],
+        "env": {},
+    },
 }
 
 

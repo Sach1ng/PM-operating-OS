@@ -44,6 +44,12 @@ If you hit auth issues, see [server-gdrive README](https://github.com/modelconte
 
 No keys needed — uses Figma's hosted MCP. When you use it, you'll be prompted to authorize in the browser.
 
+### Browser (Playwright)
+
+**No keys needed.** Enabled by default. Uses `@playwright/mcp` to give Cursor a browser it can control — navigate pages, click buttons, fill forms, take screenshots. Requires Node.js 18+.
+
+Works out of the box for testing web apps, verifying UI changes, or walking through demo flows.
+
 ---
 
 ## Other MCPs (Jira, Linear, Notion, etc.)

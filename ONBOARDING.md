@@ -186,6 +186,12 @@ Pick the ones relevant to your workflow. You can always add more later.
 |---|-----|-------------|-------------|
 | 11 | **Figma** | Read designs, inspect components | Design reviews, spec writing, design-to-requirements |
 
+#### Browser (auto-configured — no keys needed)
+
+| # | MCP | What it does | PM use case |
+|---|-----|-------------|-------------|
+| 21 | **Browser (Playwright)** | Navigate pages, click, type, take screenshots | Test web apps, verify UI changes, demo flows |
+
 #### Data & Analytics
 
 | # | MCP | What it does | PM use case |
