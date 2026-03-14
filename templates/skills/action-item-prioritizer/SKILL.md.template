@@ -1,0 +1,98 @@
+---
+name: action-item-prioritizer
+description: Prioritize action items and tasks based on strategic goals. Use when reviewing Slack summaries, daily updates, meeting notes, or any list of tasks and action items. Helps identify what to focus on first.
+---
+
+# Action Item Prioritizer
+
+## Current Strategic Goals
+
+When prioritizing action items, evaluate against these key goals (in order of priority):
+
+{% for goal in goals %}
+### Goal {{ loop.index }}: {{ goal.name }} - {{ goal.metric }}
+- **Metric**: {{ goal.metric }}
+- **Focus**: {{ goal.focus }}
+- **High-priority signals**: Align with {{ goal.focus }} — leads, demos, experiments, customer feedback, blockers
+{% endfor %}
+
+## Prioritization Framework
+
+When presented with action items, categorize and rank them:
+
+### Priority Tiers
+
+| Tier | Criteria | Action |
+|------|----------|--------|
+| **P0 - Critical** | Directly blocks goal progress, time-sensitive, customer-facing issue | Do immediately |
+| **P1 - High** | Directly advances goals, has clear impact on metrics | Do today |
+| **P2 - Medium** | Supports goals indirectly, enables future progress | Schedule this week |
+| **P3 - Low** | Nice to have, no clear goal connection | Delegate or defer |
+
+### Scoring Rubric
+
+For each action item, assess:
+
+1. **Goal Alignment** (0-3): How directly does this advance your goals?
+   - 3 = Directly moves key metric
+   - 2 = Enables someone else to move metric
+   - 1 = Indirectly related
+   - 0 = No connection
+
+2. **Urgency** (0-3): What's the time sensitivity?
+   - 3 = Blocking others or has deadline today
+   - 2 = Needed this week
+   - 1 = Needed this month
+   - 0 = No deadline
+
+3. **Impact** (0-3): What's the potential effect?
+   - 3 = High impact on customers/revenue
+   - 2 = Moderate impact
+   - 1 = Low impact
+   - 0 = Minimal impact
+
+**Priority Score** = Goal Alignment + Urgency + Impact (max 9)
+- 7-9: P0 Critical
+- 5-6: P1 High  
+- 3-4: P2 Medium
+- 0-2: P3 Low
+
+## Output Format
+
+When prioritizing action items, produce output in this format:
+
+```markdown
+## Prioritized Action Items
+
+### P0 - Critical (Do Now)
+- [ ] [Action item] — *Goal: [goal name], Impact: [brief reason]*
+
+### P1 - High (Do Today)
+- [ ] [Action item] — *Goal: [goal name], Impact: [brief reason]*
+
+### P2 - Medium (This Week)
+- [ ] [Action item] — *Goal: [goal name], Impact: [brief reason]*
+
+### P3 - Low (Delegate/Defer)
+- [ ] [Action item] — *Reason for deferral*
+
+### Recommended Focus
+Top 3 items to focus on today:
+1. [Item] - [30-second why]
+2. [Item] - [30-second why]
+3. [Item] - [30-second why]
+```
+
+## VIP Senders (Auto-Escalate to P1)
+
+Messages from these people are automatically P1 - High priority:
+{% for vip in vip_senders %}
+- **{{ vip }}** - Strategic leadership, always prioritize
+{% endfor %}
+
+## Quick Deprioritization Signals
+
+Items to push to P3 or delegate:
+{% for item in deprioritize_flat %}
+- {{ item }}
+{% endfor %}

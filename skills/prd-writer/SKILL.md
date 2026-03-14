@@ -177,6 +177,15 @@ For AI-powered products, include additional sections:
 - **Guardrails & Safety**: Ethical bounds, fallbacks, human escalation
 - **Eval Framework**: How to measure AI performance
 
+See `references/agentic-prd-template.md` for the full agentic PRD template.
+
+## Reference Templates
+
+| Template | Use Case |
+|----------|----------|
+| `references/prd-template.md` | Standard PRD with governance, problem statements, requirements |
+| `references/agentic-prd-template.md` | Extended template for AI/agent products with evals, guardrails, trust |
+
 ## Quick Reference
 
 | Section | Purpose | Key Content |
