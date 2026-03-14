@@ -66,12 +66,31 @@ Invoke when the user asks:
 
 ---
 
+## Before starting — load memory
+
+Before reviewing the artifact, check for prior context:
+
+1. **Past reviews** — Read the last 3 entries from `memory/strategy-reviews/`. Note:
+   - Common gaps across recent artifacts (recurring low scores on a dimension)
+   - Feedback patterns ("metric clarity is consistently weak")
+2. **Recent decisions** — Read the last 5 entries from `memory/decisions/`. Note:
+   - Strategic shifts that may change how alignment is evaluated
+   - New priorities or deprioritizations that affect scoring context
+
+Use this context to:
+- Flag **recurring gaps** ("This is the 3rd artifact with weak experiment rigor — consider a team-wide experiment design session")
+- Adjust for **recent pivots** ("Note: ICP shifted to enterprise per decision 2026-03-14 — scoring against updated strategic context")
+- Surface **decision coherence** ("This PRD targets SMBs, but last 2 decisions prioritized enterprise")
+
+---
+
 ## Execution flow
 
 1. **Read the artifact** — The user will share a PRD, one-pager, experiment design, or OKR (as text, file, or Google Doc link).
 2. **Score on 5 dimensions** (see scorecard below).
-3. **Provide actionable feedback** — Specific suggestions to improve alignment.
-4. **Output the scorecard**.
+3. **Compare to historical reviews** — Note patterns and recurring gaps from memory.
+4. **Provide actionable feedback** — Specific suggestions to improve alignment.
+5. **Output the scorecard**.
 
 ---
 
@@ -117,6 +136,40 @@ Invoke when the user asks:
 - **3** — Adequate: Implicit connection, needs strengthening
 - **2** — Weak: Tenuous connection, significant gaps
 - **1** — Missing: Not addressed or misaligned
+
+---
+
+## After completing review — save to memory
+
+Save a structured summary to `memory/strategy-reviews/YYYY-MM-DD_artifact-slug.md`:
+
+```markdown
+# Strategy Review — [Artifact Name]
+
+**Date:** YYYY-MM-DD
+**Artifact type:** [PRD | One-pager | Experiment design | OKR]
+**Overall score:** [X/25]
+
+## Dimension Scores
+| Dimension | Score |
+|-----------|-------|
+| Goal alignment | [1-5] |
+| Customer impact | [1-5] |
+| Metric clarity | [1-5] |
+| Strategic fit | [1-5] |
+| Experiment rigor | [1-5] |
+
+## Key Strengths
+- [strength]
+
+## Key Gaps
+- [gap]
+
+## Strategic Coherence Notes
+- [Any alignment or misalignment with recent decisions from memory/decisions/]
+```
+
+This file will be read by future reviews, the exec update generator, and the retrospective agent.
 
 ---
 

@@ -15,6 +15,28 @@ Always produce output in the format below, then send to Slack DM and append to t
 
 ---
 
+## Before starting — load memory
+
+Before building the plan, check for prior context:
+
+1. **Own history** — Read the last 2 entries from `memory/weekly-plans/`. Note:
+   - What was planned last week vs. what actually happened
+   - Items carried over multiple weeks (signals of stuck work or scope creep)
+   - Which goals made progress and which stalled
+2. **VOC signals** — Read the most recent entry from `memory/voc/` (if any). Note:
+   - Top customer themes that may warrant P0/P1 action
+   - Escalating issues that need attention this week
+3. **Recent decisions** — Read the last 3 entries from `memory/decisions/`. Note:
+   - Decisions that create new work or shift priorities
+   - Scope changes or pivots that affect this week's goals
+
+Use this context to:
+- Flag **carried-over items** ("P0 from last week still incomplete — escalate or re-scope?")
+- Surface **VOC-driven priorities** ("Customer billing issues escalating per latest VOC — consider P1")
+- Reflect **decision impact** ("ICP shift decision from 03-14 means mobile work deprioritized")
+
+---
+
 ## Data sources
 
 - **Monday Planning Doc** (weekly goals): `{{monday_planning_doc_id}}`
@@ -75,6 +97,41 @@ Always produce output in the format below, then send to Slack DM and append to t
 - **P0:** Directly advances a weekly goal, or unblocks progress, or VIP ask.
 - **P1:** Enables weekly goal progress, important this week.
 - **Backlog:** Urgent but not goal-aligned — handle quickly or delegate.
+
+---
+
+## After completing plan — save to memory
+
+Save a structured summary to `memory/weekly-plans/YYYY-Wxx.md` (for weekly) or `memory/weekly-plans/YYYY-MM-DD.md` (for daily) with this format:
+
+```markdown
+# [Weekly Plan — YYYY-Wxx] or [Daily Plan — YYYY-MM-DD]
+
+**Date:** YYYY-MM-DD
+
+## Previous Plan Status
+- [Item]: ✅ Done | 🔄 Carried over | ⚠️ Blocked | ❌ Dropped
+
+## This Period's Plan
+### P0 — Strategic Focus
+1. [Action] — [goal alignment]
+
+### P1 — Important
+- [Action]
+
+### Backlog
+- [Action]
+
+## Goal Progress
+- [Goal 1]: [status emoji] [note]
+
+## Context Inputs
+- **VOC signals used:** [yes/no — key themes if yes]
+- **Decisions referenced:** [list any from memory/decisions/]
+- **Carried from last period:** [items]
+```
+
+This file will be read by future planning runs, the exec update generator, and the retrospective agent.
 
 ---
 

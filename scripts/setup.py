@@ -226,7 +226,22 @@ def main():
         (output_dir / "agents" / "exec-update-generator.md").write_text(eu_content, encoding="utf-8")
         print(f"  Generated agents/exec-update-generator.md")
 
-    # 5. Skills — copy from skills/ or generate from templates
+    # 4d. Retrospective agent (if enabled)
+    if agents_cfg.get("retrospective"):
+        retro_content = render_template(env, "agents/retrospective.md.template", ctx)
+        (output_dir / "agents" / "retrospective.md").write_text(retro_content, encoding="utf-8")
+        print(f"  Generated agents/retrospective.md")
+
+    # 5. Memory directory — create if it doesn't exist (context graph trajectory store)
+    memory_dir = PROJECT_ROOT / "memory"
+    for subdir in ["decisions", "voc", "weekly-plans", "strategy-reviews", "exec-updates", "knowledge-snapshots"]:
+        (memory_dir / subdir).mkdir(parents=True, exist_ok=True)
+    if not (memory_dir / "README.md").exists():
+        print(f"  Memory directory exists at {memory_dir}")
+    else:
+        print(f"  Memory directory ready at {memory_dir}")
+
+    # 7. Skills — copy from skills/ or generate from templates
     skills_src = PROJECT_ROOT / "skills"
     templates_dir = PROJECT_ROOT / "templates"
 
@@ -260,6 +275,9 @@ def main():
         "experiment_writeup": "experiment-writeup",
         "brainstorming": "brainstorming",
         "writing_clearly": "writing-clearly",
+        "decision_logger": "decision-logger",
+        "what_if": "what-if",
+        "knowledge_updater": "knowledge-updater",
     }
     for cfg_key, folder_name in SKILL_MAP.items():
         if skills_cfg.get(cfg_key, False) and (skills_src / folder_name).exists():

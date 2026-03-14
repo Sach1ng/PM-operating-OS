@@ -105,6 +105,10 @@ skills:
   stakeholder_update: true
   meeting_to_actions: true
   experiment_writeup: true
+  # Context graph skills
+  decision_logger: true
+  what_if: true
+  knowledge_updater: true
 
 # --- Part 10: Agents to include ---
 agents:
@@ -112,6 +116,8 @@ agents:
   weekly_planner: true
   strategy_reviewer: true
   exec_update_generator: true
+  # Context graph agents
+  retrospective: true
 
 # --- Part 11: PRD template ---
 prd_template: "generic"

@@ -1,6 +1,6 @@
 # PM Operating System
 
-A self-serve Cursor setup for product managers: rules, skills, and agents that adapt to your role, goals, and tools.
+A context graph for product teams — rules, skills, agents, and memory that adapt to your role, goals, and tools. Built on Cursor IDE.
 
 **Created by [@Sach1ng](https://github.com/Sach1ng) and [@hardiktiwari](https://github.com/hardiktiwari)**
 
@@ -27,8 +27,9 @@ A self-serve Cursor setup for product managers: rules, skills, and agents that a
 |------|------------|---------------------|
 | **Rules** | Persistent guidance Cursor applies | Your product, role, org, deprioritization signals |
 | **Skills** | On-demand PM capabilities | Goals, VIPs, PRD template, expanded PM workflows |
-| **Agents** | Specialized assistants (VOC, planning, strategy review, exec updates) | Slack channel, Google docs, goals |
+| **Agents** | Specialized assistants (VOC, planning, strategy review, exec updates, retrospective) | Slack channel, Google docs, goals |
 | **Knowledge layer** | Strategy and domain context (personas, metrics, competitive landscape) | Customize in `knowledge/` |
+| **Memory** | Trajectory store — accumulated agent outputs, decision traces, knowledge snapshots | Builds automatically as you use agents |
 
 ---
 
@@ -43,6 +44,7 @@ A self-serve Cursor setup for product managers: rules, skills, and agents that a
 | **output/** | Generated rules, agents, skills (gitignored) |
 | **skills/** | Source for prd-writer, working-backwards, and expanded PM skills |
 | **knowledge/** | Strategy docs (personas, metrics, competitive landscape) — used by agents and rules |
+| **memory/** | Context graph trajectory store — decision traces, agent outputs, knowledge snapshots |
 | **agents/** | Agent docs (see agents/README.md) |
 
 ---
@@ -67,6 +69,7 @@ A self-serve Cursor setup for product managers: rules, skills, and agents that a
 | **Communicating** | exec-communicator, stakeholder-update |
 | **Learning** | experiment-writeup, voc-analyzer |
 | **Operating** | weekly-planner, meeting-to-actions, action-item-prioritizer |
+| **Context graph** | decision-logger, what-if, knowledge-updater, retrospective |
 
 ---
 
@@ -78,6 +81,52 @@ The `knowledge/` directory holds strategy and domain context that agents and rul
 - **examples/** — Fully worked-out examples using public investor data from **Spotify, Netflix, Shopify, and Uber** (SEC 10-Ks, earnings calls, investor presentations)
 
 **How to customize:** Edit the markdown files in `knowledge/` to reflect your product, team, and current strategy. Browse `knowledge/examples/` to see how real companies' strategy, segments, and metrics map to the template. The strategy-reviewer agent and domain context rule use this context automatically.
+
+---
+
+## Context Graph — Memory Layer
+
+PM OS includes a **memory layer** that turns it from a static configuration system into a context graph where reasoning accumulates over time. Inspired by [context graph infrastructure](https://www.linkedin.com/pulse/how-do-you-build-context-graph-jaya-gupta-xicwe/) — the idea that the next wave of AI won't just store data, it will capture the *reasoning* that connects data to decisions.
+
+### How it works
+
+Every agent **reads from memory before starting** (what happened last time, what trends are emerging) and **writes to memory after completing** (structured summary of findings). This creates three capabilities:
+
+| Capability | What it does | How |
+|------------|-------------|-----|
+| **Temporal awareness** | Agents know what happened before | VOC in March knows what February found; weekly planner knows what got done vs. dropped |
+| **Cross-agent context** | Agents read each other's outputs | Exec update pulls from VOC, plans, decisions, and reviews — no manual stitching |
+| **Compounding intelligence** | Context gets richer over time | More runs → better trend detection, drift analysis, and simulation grounding |
+
+### Memory structure
+
+```
+memory/
+├── decisions/            # Decision traces — the "why" behind key calls
+├── voc/                  # VOC analyzer outputs over time
+├── weekly-plans/         # Weekly planner outputs
+├── strategy-reviews/     # Strategy reviewer scorecards
+├── exec-updates/         # Executive status updates
+└── knowledge-snapshots/  # Versioned snapshots for drift detection
+```
+
+### Context graph skills and agents
+
+| Name | Type | What it does |
+|------|------|-------------|
+| **decision-logger** | Skill | Captures structured decision traces after key PM moments (PRD approvals, scope changes, launch/kill calls) |
+| **what-if** | Skill | Simulates impact of proposed decisions using accumulated context — strategy, past decisions, VOC, execution history |
+| **knowledge-updater** | Skill | Updates knowledge docs with automatic snapshotting for drift detection |
+| **retrospective** | Agent | Reads across all memory to surface patterns, strategy drift, execution velocity, and blind spots |
+
+### Getting started with memory
+
+Memory builds automatically as you use PM OS agents. To accelerate:
+
+1. **Log a few key decisions** — Say *"log this decision"* after your next prioritization call or PRD approval
+2. **Run VOC analysis** — Each run saves to memory, building a trend baseline
+3. **Plan your week** — Weekly plans accumulate, creating an execution history
+4. **Run a retrospective** — Say *"retrospective"* once you have 5+ memory entries to see patterns emerge
 
 ---
 

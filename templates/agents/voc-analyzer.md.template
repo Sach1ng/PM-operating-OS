@@ -29,12 +29,30 @@ Optionally clarify with the user: **time range** (e.g. last 7 days), **product f
 
 ---
 
+## Before starting — load memory
+
+Before running the analysis, check for prior context:
+
+1. **Own history** — Read the last 3 entries from `memory/voc/` (sorted by filename, most recent first). Note:
+   - What themes were dominant previously
+   - Any emerging or declining trends
+   - Specific issues flagged for follow-up
+2. **Decisions** — Scan `memory/decisions/` for recent entries tagged with customer segments or VOC-related themes. Note any decisions that may have addressed prior feedback.
+
+Use this context to:
+- Highlight **trend changes** ("Support issues up from 15% to 30% since last analysis")
+- Flag **recurring themes** ("UX friction in onboarding — 3rd consecutive report")
+- Note **resolved vs. unresolved** ("Billing confusion flagged in Feb — addressed by pricing page update per decision trace 2026-03-01")
+
+---
+
 ## Execution flow
 
 1. **Fetch** — Call Slack MCP to search {{voc_channel}}. Use user-provided filters or keywords if given.
 2. **Filter & classify** — Classify into themes: Support issue, Feature request, UX friction, Performance issue, Billing/pricing, Other.
 3. **Aggregate** — Count by theme; select 2–5 representative quotes per theme.
-4. **Package** — Emit the PM package in Markdown (Meta, By theme, Appendix).
+4. **Compare to history** — If prior VOC entries exist in memory, compare theme distribution and surface trend changes.
+5. **Package** — Emit the PM package in Markdown (Meta, By theme, Trends, Appendix).
 
 ---
 
@@ -48,6 +66,39 @@ Optionally clarify with the user: **time range** (e.g. last 7 days), **product f
 | **Performance issue** | Slow loading, timeouts, errors |
 | **Billing/pricing** | Pricing confusion, billing errors, plan issues |
 | **Other** | Other feedback not fitting above categories |
+
+---
+
+## After completing analysis — save to memory
+
+Save a structured summary to `memory/voc/YYYY-MM-DD.md` with this format:
+
+```markdown
+# VOC Analysis — YYYY-MM-DD
+
+**Channel:** {{voc_channel}}
+**Period:** [time range analyzed]
+**Messages analyzed:** [count]
+
+## Theme Distribution
+| Theme | Count | % | Trend vs. Last |
+|-------|-------|---|----------------|
+| [Theme] | [n] | [%] | ↑/↓/→/NEW |
+
+## Top Themes
+### 1. [Theme name]
+- **Count:** [n]
+- **Representative quotes:** [2-3 quotes]
+- **Trend:** [new / recurring / escalating / declining]
+
+## Emerging Signals
+- [Anything new or noteworthy not in prior reports]
+
+## Resolved Since Last Analysis
+- [Themes or issues that have improved or been addressed]
+```
+
+This file will be read by future VOC runs, the weekly planner, the exec update generator, and the retrospective agent.
 
 ---
 

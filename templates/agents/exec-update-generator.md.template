@@ -26,18 +26,43 @@ Invoke this agent when the user asks for:
 
 ---
 
+## Before starting — load memory
+
+Before compiling the update, gather context from the full trajectory store:
+
+1. **Weekly plans** — Read entries from `memory/weekly-plans/` covering the update period. Note:
+   - What was planned vs. completed
+   - Items that were blocked or dropped
+2. **VOC signals** — Read entries from `memory/voc/` covering the update period. Note:
+   - Top customer themes for the period
+   - Trends (escalating, declining, new)
+3. **Strategy reviews** — Read entries from `memory/strategy-reviews/` covering the update period. Note:
+   - Artifacts reviewed and their scores
+   - Strategic alignment strengths and gaps
+4. **Decisions** — Read entries from `memory/decisions/` covering the update period. Note:
+   - Key decisions made and their rationale
+   - Strategic pivots or scope changes
+5. **Previous exec updates** — Read the last entry from `memory/exec-updates/` for continuity. Note:
+   - What was flagged as "next period" last time
+   - Open risks or asks from prior update
+
+Use this to build a comprehensive, evidence-grounded update without relying solely on user memory.
+
+---
+
 ## Execution flow
 
 1. **Clarify scope** — Ask the user:
    - Who is the audience? (e.g., VP, director, leadership)
    - What time period? (e.g., last week, this sprint, Q1)
    - What product/initiative? (default: {{product}})
-2. **Gather context:**
+2. **Gather context from memory** — Pull from trajectory store (see above).
+3. **Supplement with live sources:**
    - If Slack MCP available: Search for recent updates, launches, blockers in relevant channels
    - If Google Drive MCP available: Check planning docs (Monday doc, standup doc) for status
    - Use workspace files and open documents as additional context
-3. **Compile into BLUF format** (see below).
-4. **Frame everything in strategic context** — Connect to strategic goals and {{product}} goals.
+4. **Compile into BLUF format** (see below).
+5. **Frame everything in strategic context** — Connect to strategic goals and {{product}} goals.
 
 ---
 
@@ -91,4 +116,41 @@ Invoke this agent when the user asks for:
 
 ---
 
-When invoked, start by clarifying audience and time period, then gather context from Slack and Google Drive if available, and deliver the BLUF update.
+## After completing update — save to memory
+
+Save a structured summary to `memory/exec-updates/YYYY-MM-DD.md`:
+
+```markdown
+# Exec Update — YYYY-MM-DD
+
+**Audience:** [who]
+**Period:** [time range]
+**Overall status:** On Track | At Risk | Blocked
+
+## Key Accomplishments
+- [what shipped or progressed]
+
+## Metrics Snapshot
+| Metric | Current | Target | Trend |
+|--------|---------|--------|-------|
+| [metric] | [value] | [value] | ↑/↓/→ |
+
+## Risks & Blockers
+- [risk] — Mitigation: [action]
+
+## Asks
+- [specific request]
+
+## Next Period Focus
+- [what's planned]
+
+## Sources Referenced
+- **Memory entries used:** [list files from memory/ that informed this update]
+- **Live sources:** [Slack channels, Drive docs consulted]
+```
+
+This file will be read by future exec updates and the retrospective agent.
+
+---
+
+When invoked, start by clarifying audience and time period, then gather context from memory and live sources, and deliver the BLUF update.
