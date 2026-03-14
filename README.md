@@ -27,7 +27,7 @@ A context graph for product teams — rules, skills, agents, and memory that ada
 |------|------------|---------------------|
 | **Rules** | Persistent guidance Cursor applies | Your product, role, org, deprioritization signals |
 | **Skills** | On-demand PM capabilities | Goals, VIPs, PRD template, expanded PM workflows |
-| **Agents** | Specialized assistants (VOC, planning, strategy review, exec updates, retrospective) | Slack channel, Google docs, goals |
+| **Agents** | Specialized assistants (feedback analysis, planning, strategy review, exec updates, retrospective) | Slack channel, Google docs, goals |
 | **Knowledge layer** | Strategy and domain context (personas, metrics, competitive landscape) | Customize in `knowledge/` |
 | **Memory** | Trajectory store — accumulated agent outputs, decision traces, knowledge snapshots | Builds automatically as you use agents |
 
@@ -55,7 +55,7 @@ A context graph for product teams — rules, skills, agents, and memory that ada
 |---|------------|----------------|
 | **Rules** | Persistent guidance Cursor applies | How *you* work: standards, org context, prioritization |
 | **Skills** | On-demand "how-to" Cursor uses when the task fits | PM capabilities: PRDs, working backwards, prioritization |
-| **Agents** | Specialized assistants Cursor delegates to | Concrete tasks: VOC analysis, daily planning, strategy review |
+| **Agents** | Specialized assistants Cursor delegates to | Concrete tasks: feedback analysis, daily planning, strategy review |
 
 ---
 
@@ -67,7 +67,7 @@ A context graph for product teams — rules, skills, agents, and memory that ada
 | **Building** | prd-writer, one-pager, experiment-designer |
 | **Shipping** | launch-readiness, launch-post |
 | **Communicating** | exec-communicator, stakeholder-update |
-| **Learning** | experiment-writeup, voc-analyzer |
+| **Learning** | experiment-writeup, feedback-analyzer |
 | **Operating** | weekly-planner, meeting-to-actions, action-item-prioritizer |
 | **Context graph** | decision-logger, what-if, knowledge-updater, retrospective |
 
@@ -94,8 +94,8 @@ Every agent **reads from memory before starting** (what happened last time, what
 
 | Capability | What it does | How |
 |------------|-------------|-----|
-| **Temporal awareness** | Agents know what happened before | VOC in March knows what February found; weekly planner knows what got done vs. dropped |
-| **Cross-agent context** | Agents read each other's outputs | Exec update pulls from VOC, plans, decisions, and reviews — no manual stitching |
+| **Temporal awareness** | Agents know what happened before | Feedback analyzer in March knows what February found; weekly planner knows what got done vs. dropped |
+| **Cross-agent context** | Agents read each other's outputs | Exec update pulls from feedback, plans, decisions, and reviews — no manual stitching |
 | **Compounding intelligence** | Context gets richer over time | More runs → better trend detection, drift analysis, and simulation grounding |
 
 ### Memory structure
@@ -103,7 +103,7 @@ Every agent **reads from memory before starting** (what happened last time, what
 ```
 memory/
 ├── decisions/            # Decision traces — the "why" behind key calls
-├── voc/                  # VOC analyzer outputs over time
+├── feedback/             # Feedback analyzer outputs over time
 ├── weekly-plans/         # Weekly planner outputs
 ├── strategy-reviews/     # Strategy reviewer scorecards
 ├── exec-updates/         # Executive status updates
@@ -115,7 +115,7 @@ memory/
 | Name | Type | What it does |
 |------|------|-------------|
 | **decision-logger** | Skill | Captures structured decision traces after key PM moments (PRD approvals, scope changes, launch/kill calls) |
-| **what-if** | Skill | Simulates impact of proposed decisions using accumulated context — strategy, past decisions, VOC, execution history |
+| **what-if** | Skill | Simulates impact of proposed decisions using accumulated context — strategy, past decisions, customer feedback, execution history |
 | **knowledge-updater** | Skill | Updates knowledge docs with automatic snapshotting for drift detection |
 | **retrospective** | Agent | Reads across all memory to surface patterns, strategy drift, execution velocity, and blind spots |
 
@@ -124,7 +124,7 @@ memory/
 Memory builds automatically as you use PM OS agents. To accelerate:
 
 1. **Log a few key decisions** — Say *"log this decision"* after your next prioritization call or PRD approval
-2. **Run VOC analysis** — Each run saves to memory, building a trend baseline
+2. **Run feedback analysis** — Each run saves to memory, building a trend baseline
 3. **Plan your week** — Weekly plans accumulate, creating an execution history
 4. **Run a retrospective** — Say *"retrospective"* once you have 5+ memory entries to see patterns emerge
 
@@ -154,12 +154,12 @@ If you prefer not to run the setup script:
 
 ---
 
-## VOC Analyzer (Slack feedback)
+## Feedback Analyzer (Slack)
 
-If you enabled the VOC analyzer:
+If you enabled the feedback analyzer:
 
-1. Configure **Slack MCP** in Cursor (Settings → MCP) with access to your VOC channel.
-2. In Cursor chat, say: *"Analyze VOC"*, *"Slack VOC analysis"*, or *"Customer feedback"*.
+1. Configure **Slack MCP** in Cursor (Settings → MCP) with access to your feedback channel.
+2. In Cursor chat, say: *"Analyze feedback"*, *"Slack feedback analysis"*, or *"Customer feedback"*.
 3. The agent searches your configured channel, classifies feedback by theme, and returns a PM report.
 
 See [agents/README.md](agents/README.md) for details.

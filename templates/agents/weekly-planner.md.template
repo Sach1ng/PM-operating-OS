@@ -23,7 +23,7 @@ Before building the plan, check for prior context:
    - What was planned last week vs. what actually happened
    - Items carried over multiple weeks (signals of stuck work or scope creep)
    - Which goals made progress and which stalled
-2. **VOC signals** — Read the most recent entry from `memory/voc/` (if any). Note:
+2. **Feedback signals** — Read the most recent entry from `memory/feedback/` (if any). Note:
    - Top customer themes that may warrant P0/P1 action
    - Escalating issues that need attention this week
 3. **Recent decisions** — Read the last 3 entries from `memory/decisions/`. Note:
@@ -32,7 +32,7 @@ Before building the plan, check for prior context:
 
 Use this context to:
 - Flag **carried-over items** ("P0 from last week still incomplete — escalate or re-scope?")
-- Surface **VOC-driven priorities** ("Customer billing issues escalating per latest VOC — consider P1")
+- Surface **feedback-driven priorities** ("Customer billing issues escalating per latest feedback — consider P1")
 - Reflect **decision impact** ("ICP shift decision from 03-14 means mobile work deprioritized")
 
 ---
@@ -126,7 +126,7 @@ Save a structured summary to `memory/weekly-plans/YYYY-Wxx.md` (for weekly) or `
 - [Goal 1]: [status emoji] [note]
 
 ## Context Inputs
-- **VOC signals used:** [yes/no — key themes if yes]
+- **Feedback signals used:** [yes/no — key themes if yes]
 - **Decisions referenced:** [list any from memory/decisions/]
 - **Carried from last period:** [items]
 ```

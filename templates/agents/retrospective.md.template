@@ -50,7 +50,7 @@ Invoke when the user asks for:
 ## Data sources — read ALL of these
 
 1. **`memory/decisions/`** — All decision traces. Read every entry.
-2. **`memory/voc/`** — All VOC analysis outputs. Read every entry.
+2. **`memory/feedback/`** — All customer feedback analysis outputs. Read every entry.
 3. **`memory/weekly-plans/`** — All weekly/daily plans. Read every entry.
 4. **`memory/strategy-reviews/`** — All strategy review scorecards. Read every entry.
 5. **`memory/exec-updates/`** — All exec updates. Read every entry.
@@ -76,10 +76,10 @@ For each category, analyze across the full time range of available memory:
 - Which pillars have the most decision activity? Which have none?
 - If knowledge snapshots exist: how has the stated strategy itself evolved?
 
-### 3. VOC Trajectory
+### 3. Feedback Trajectory
 - Theme trends over time: what's escalating, declining, new, persistent?
-- Are top VOC themes reflected in decisions and weekly plans?
-- Unaddressed themes: customer pain points that appear in VOC but never show up in plans or decisions
+- Are top feedback themes reflected in decisions and weekly plans?
+- Unaddressed themes: customer pain points that appear in feedback but never show up in plans or decisions
 
 ### 4. Execution Velocity
 - Plans vs. completion: what % of P0 items get done?
@@ -88,7 +88,7 @@ For each category, analyze across the full time range of available memory:
 - Goal progress trend: accelerating, steady, or stalling?
 
 ### 5. Blind Spots
-- Strategic pillars with no decisions, no VOC coverage, no plans
+- Strategic pillars with no decisions, no feedback coverage, no plans
 - Customer segments mentioned in strategy but absent from agent outputs
 - Metrics defined as key but never referenced in reviews or updates
 - Risks flagged in exec updates that were never mitigated
@@ -115,7 +115,7 @@ For each category, analyze across the full time range of available memory:
 - [Stated vs. actual comparison]
 - [Pillar coverage analysis]
 
-### VOC Trajectory
+### Feedback Trajectory
 - [Trend analysis]
 - [Unaddressed themes]
 

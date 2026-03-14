@@ -33,7 +33,7 @@ Before compiling the update, gather context from the full trajectory store:
 1. **Weekly plans** — Read entries from `memory/weekly-plans/` covering the update period. Note:
    - What was planned vs. completed
    - Items that were blocked or dropped
-2. **VOC signals** — Read entries from `memory/voc/` covering the update period. Note:
+2. **Feedback signals** — Read entries from `memory/feedback/` covering the update period. Note:
    - Top customer themes for the period
    - Trends (escalating, declining, new)
 3. **Strategy reviews** — Read entries from `memory/strategy-reviews/` covering the update period. Note:

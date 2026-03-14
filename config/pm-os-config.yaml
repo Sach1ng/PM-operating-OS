@@ -61,8 +61,8 @@ tools:
 
 # --- Part 6: Slack ---
 slack:
-  voc_channel: "#(update-your-voc-channel)"
-  voc_channel_id: ""
+  feedback_channel: "#(update-your-feedback-channel)"
+  feedback_channel_id: ""
   dm_recipient_id: ""
 
 # --- Part 7: Google Drive ---
@@ -112,7 +112,7 @@ skills:
 
 # --- Part 10: Agents to include ---
 agents:
-  voc_analyzer: true
+  feedback_analyzer: true
   weekly_planner: true
   strategy_reviewer: true
   exec_update_generator: true

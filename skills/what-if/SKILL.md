@@ -31,7 +31,7 @@ Read the following to ground the simulation in actual organizational context:
 
 - **`knowledge/` (strategy, segments, metrics, competitive landscape)** — the baseline "world model"
 - **`memory/decisions/`** — past decision traces for precedent and pattern
-- **`memory/voc/`** — customer signals that would be affected
+- **`memory/feedback/`** — customer signals that would be affected
 - **`memory/weekly-plans/`** — current execution state and momentum
 - **`memory/strategy-reviews/`** — alignment patterns and recurring gaps
 
@@ -46,7 +46,7 @@ For the proposed action, analyze:
 
 **B. Customer Impact**
 - Which customer segments are affected? (reference `knowledge/customer-segments.md`)
-- Does VOC data support or contradict this direction?
+- Does customer feedback data support or contradict this direction?
 - What customer pain points get addressed vs. neglected?
 
 **C. Metric Impact**
@@ -98,7 +98,7 @@ Based on the accumulated context, provide:
 
 ### Customer Impact
 - [Segments affected]
-- [VOC alignment]
+- [Feedback alignment]
 
 ### Metric Impact
 | Metric | Expected Direction | Confidence | Rationale |

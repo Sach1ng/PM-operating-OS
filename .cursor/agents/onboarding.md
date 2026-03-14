@@ -23,7 +23,7 @@ Invoke when the user says:
 
 ## Workflow
 
-1. **Prerequisites check** — Before starting Q&A, explain what works out of the box vs. what needs MCP setup. Ask: "Do you have Slack MCP and/or Google Drive MCP connected in Cursor? (If not sure, no worries — 15+ skills work without any MCP. MCPs are only needed for 3 agents: VOC analyzer, weekly planner, and exec update generator.)"
+1. **Prerequisites check** — Before starting Q&A, explain what works out of the box vs. what needs MCP setup. Ask: "Do you have Slack MCP and/or Google Drive MCP connected in Cursor? (If not sure, no worries — 15+ skills work without any MCP. MCPs are only needed for 3 agents: feedback analyzer, weekly planner, and exec update generator.)"
 2. **Confirm** — "I'll ask you a few questions to configure PM-OS. Your answers will be written to `config/pm-os-config.yaml`. Ready?"
 3. **Step 1: Company and role** — Ask only: (a) Company name, (b) Your role title. Wait for the user's reply.
 4. **Trigger company research subagent** — After the user provides company name and role, call the **company-researcher** subagent:
@@ -44,7 +44,7 @@ Invoke when the user says:
 ## Question batches (ask in this order)
 
 ### Batch 0: Prerequisites
-- Do you have Slack MCP connected in Cursor? (Y/N — needed for VOC analyzer, weekly planner, exec updates)
+- Do you have Slack MCP connected in Cursor? (Y/N — needed for feedback analyzer, weekly planner, exec updates)
 - Do you have Google Drive MCP connected in Cursor? (Y/N — needed for weekly planner, exec updates)
 - If N to both: "No problem! All 15+ skills work without any MCP. I'll skip the Slack/Drive config questions and you can set those up later if you want. Let's continue."
 - If N to one: Explain what they'll miss and offer setup instructions (Cursor → Settings → MCP → add the server → authorize). Or skip and set up later.
@@ -76,7 +76,7 @@ After the user replies, call the **company-researcher** subagent via mcp_task wi
 - Use Jira, Figma, Databricks? (Y/N each, optional)
 
 ### Batch 6: Slack (if Y)
-- VOC / feedback channel? (e.g. #product-feedback)
+- Feedback channel? (e.g. #product-feedback)
 - Slack DM recipient for daily plans? (user ID or handle)
 - Channel ID? (optional)
 
@@ -95,7 +95,7 @@ After the user replies, call the **company-researcher** subagent via mcp_task wi
 - Include these learning/operating skills? (Y/N each; default Y):
   experiment-writeup, meeting-to-actions
 - Include these agents? (Y/N each; depends on tools):
-  voc-analyzer, weekly-planner, strategy-reviewer, exec-update-generator
+  feedback-analyzer, weekly-planner, strategy-reviewer, exec-update-generator
 - PRD template: generic?
 
 ---

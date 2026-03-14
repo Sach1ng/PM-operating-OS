@@ -59,8 +59,8 @@ def build_template_context(cfg: dict) -> dict:
         "vip_senders": stakeholders.get("vip_senders", []),
         "identity": identity,
         "domain": domain,
-        "voc_channel": slack.get("voc_channel", "#feedback"),
-        "voc_channel_id": slack.get("voc_channel_id", ""),
+        "feedback_channel": slack.get("feedback_channel", "#feedback"),
+        "feedback_channel_id": slack.get("feedback_channel_id", ""),
         "dm_recipient_id": slack.get("dm_recipient_id", ""),
         "monday_planning_doc_id": gdrive.get("monday_planning_doc_id", ""),
         "daily_standup_doc_id": gdrive.get("daily_standup_doc_id", ""),
@@ -198,13 +198,13 @@ def main():
             shutil.copy2(agent_src, output_dir / "agents" / f"{agent_name}.md")
             print(f"  Copied agents/{agent_name}.md")
 
-    # 3. VOC analyzer (if Slack + enabled)
-    if tools.get("slack") and agents_cfg.get("voc_analyzer"):
-        voc_content = render_template(env, "agents/voc-analyzer.md.template", ctx)
-        (output_dir / "agents" / "voc-analyzer.md").write_text(voc_content, encoding="utf-8")
-        print(f"  Generated agents/voc-analyzer.md")
+    # 3. Feedback analyzer (if Slack + enabled)
+    if tools.get("slack") and agents_cfg.get("feedback_analyzer"):
+        fa_content = render_template(env, "agents/feedback-analyzer.md.template", ctx)
+        (output_dir / "agents" / "feedback-analyzer.md").write_text(fa_content, encoding="utf-8")
+        print(f"  Generated agents/feedback-analyzer.md")
     else:
-        print(f"  Skipped agents/voc-analyzer.md (slack={tools.get('slack')}, voc_analyzer={agents_cfg.get('voc_analyzer')})")
+        print(f"  Skipped agents/feedback-analyzer.md (slack={tools.get('slack')}, feedback_analyzer={agents_cfg.get('feedback_analyzer')})")
 
     # 4. Weekly planner (if Google Drive + Slack + enabled)
     if tools.get("slack") and tools.get("google_drive") and agents_cfg.get("weekly_planner"):
@@ -234,7 +234,7 @@ def main():
 
     # 5. Memory directory — create if it doesn't exist (context graph trajectory store)
     memory_dir = PROJECT_ROOT / "memory"
-    for subdir in ["decisions", "voc", "weekly-plans", "strategy-reviews", "exec-updates", "knowledge-snapshots"]:
+    for subdir in ["decisions", "feedback", "weekly-plans", "strategy-reviews", "exec-updates", "knowledge-snapshots"]:
         (memory_dir / subdir).mkdir(parents=True, exist_ok=True)
     if not (memory_dir / "README.md").exists():
         print(f"  Memory directory exists at {memory_dir}")

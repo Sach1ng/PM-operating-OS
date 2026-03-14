@@ -106,7 +106,7 @@ Priority levels:
 ### 10. Insights and Problem Validation
 
 - **Market Research**: SWOT analysis, competitive UI analysis
-- **Customer Insights**: Research findings, survey data, VOC, app reviews
+- **Customer Insights**: Research findings, survey data, customer feedback, app reviews
 - Include supporting quotes when available
 
 ### 11. Milestones and Releases

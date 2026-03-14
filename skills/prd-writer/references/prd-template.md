@@ -153,7 +153,7 @@ Provide clear SWOT analysis of any competitors or players in the market. Include
 What do customers say about the problem(s)? Include any customer insights gathered from:
 - User research / interviews
 - Survey studies
-- Voice of Customer (VOC)
+- Customer feedback and surveys
 - App reviews
 - Support tickets
 

@@ -25,7 +25,7 @@ PM-OS is structured as an operating system with four layers:
 | **Knowledge (kernel)** | Strategy and domain context that every skill and agent draws from | `knowledge/` |
 | **Rules (system services)** | Always-on guidance — strategic framing, domain awareness | `templates/rules/` → `output/rules/` |
 | **Skills (applications)** | On-demand PM capabilities — PRDs, launch posts, experiments | `skills/` |
-| **Agents (daemons)** | Specialized assistants — VOC analysis, exec updates, strategy review | `templates/agents/` → `output/agents/` |
+| **Agents (daemons)** | Specialized assistants — feedback analysis, exec updates, strategy review | `templates/agents/` → `output/agents/` |
 
 ---
 
@@ -170,9 +170,9 @@ Pick the ones relevant to your workflow. You can always add more later.
 
 | # | MCP | What it does | PM use case |
 |---|-----|-------------|-------------|
-| 1 | **Slack** | Search channels, send messages, read threads | VOC analysis, weekly planning, exec updates |
+| 1 | **Slack** | Search channels, send messages, read threads | Feedback analysis, weekly planning, exec updates |
 | 2 | **Gmail / Email** | Read and draft emails | Stakeholder communication, follow-ups |
-| 3 | **Microsoft Teams** | Search chats and channels | VOC analysis, team communication (Teams-based orgs) |
+| 3 | **Microsoft Teams** | Search chats and channels | Feedback analysis, team communication (Teams-based orgs) |
 
 #### Documents & Knowledge
 
@@ -219,7 +219,7 @@ Pick the ones relevant to your workflow. You can always add more later.
 |---|-----|-------------|-------------|
 | 17 | **Salesforce** | Read CRM data, accounts, opportunities | Customer insights, enterprise deal context |
 | 18 | **HubSpot** | Read CRM and marketing data | Lead data, customer lifecycle |
-| 19 | **Zendesk** | Read support tickets | Customer pain points, bug reports, VOC |
+| 19 | **Zendesk** | Read support tickets | Customer pain points, bug reports, feedback |
 | 20 | **Intercom** | Read conversations and tickets | Customer feedback, support trends |
 
 **Choose by number** (e.g., "1, 4, 7" or "none"). You can always add more later.
@@ -242,9 +242,9 @@ For each MCP you selected, follow the same pattern:
 
 | Question | Your answer | What it affects |
 |----------|-------------|-----------------|
-| **VOC / feedback channel** (e.g., #product-feedback) | | VOC analyzer agent — which channel to search |
+| **Feedback channel** (e.g., #product-feedback) | | Feedback analyzer agent — which channel to search |
 | **Slack DM recipient** for daily plans (user ID or handle) | | Weekly planner — where to send plans |
-| **Channel ID** (optional; if known) | | VOC agent query |
+| **Channel ID** (optional; if known) | | Feedback agent query |
 
 #### Google Drive (4) — requires configuration
 
@@ -309,7 +309,7 @@ For MCPs 2-3, 5-20: just install and authorize. No additional PM-OS config requi
 
 | Agent | Include? (Y/N) | Requirements |
 |-------|-----------------|--------------|
-| **voc-analyzer** | | Slack MCP, VOC channel access |
+| **feedback-analyzer** | | Slack MCP, feedback channel access |
 | **weekly-planner** | | Google Drive MCP, Slack MCP, planning docs |
 | **strategy-reviewer** | | Reviews any artifact for strategic alignment (scorecard) |
 | **exec-update-generator** | | Slack + Drive MCP (optional) |
@@ -339,7 +339,7 @@ Based on your answers, the setup script generates and deploys:
 
 | Output | What it does | Requires |
 |--------|--------------|----------|
-| `agents/voc-analyzer.md` | VOC analysis from Slack feedback channels | Slack MCP |
+| `agents/feedback-analyzer.md` | Customer feedback analysis from Slack channels | Slack MCP |
 | `agents/weekly-planner.md` | Daily/weekly planning from Google Docs + Slack | Slack + Drive MCP |
 | `agents/strategy-reviewer.md` | Reviews PRDs, one-pagers, specs for strategic fit | — |
 | `agents/exec-update-generator.md` | Auto-generates leadership status updates | Slack + Drive MCP (optional) |
