@@ -60,21 +60,55 @@ Invoke when the user says:
 - Product principles? (how you make decisions)
 - Strategy doc URL? (optional — agent can extract context from it)
 
-### Batch 5: Tools (optional — all 15+ skills work without any integrations)
-- Use Slack? (Y/N)
-- Use Google Drive/Docs? (Y/N)
-- Use Jira, Figma, Databricks? (Y/N each, optional)
-- If N to Slack and Drive: "No problem! All skills work without any MCP. I'll skip the Slack/Drive config. You can set those up later if you want agents that pull live data."
+### Batch 5: MCP Selection (optional — all 15+ skills work without any integrations)
+Present this menu and ask the user to pick by number:
+```
+Which MCPs do you want to connect? (All skills work without any — these add superpowers to agents)
 
-### Batch 6: Slack (if Y)
-- VOC / feedback channel? (e.g. #product-feedback)
-- Slack DM recipient for daily plans? (user ID or handle)
-- Channel ID? (optional)
+1. Slack — VOC analyzer, weekly planner, exec updates
+2. Google Drive — weekly planner, exec updates
+3. Jira — ticket tracking agents
+4. Figma — design-to-code workflows
+5. Databricks — data analysis agents
 
-### Batch 7: Google Drive (if Y)
-- Monday Planning doc ID?
-- Daily Standup doc ID?
-- PMO / status sheet URL? (optional)
+Pick by number (e.g. "1, 2" or "all" or "none"):
+```
+- If "none": "No problem! All 15+ skills work without any MCP. You can always set these up later. Moving on."
+- If they pick any: Proceed to the setup steps for each selected MCP below.
+
+### Batch 6: Setup for each selected MCP (one at a time)
+For each MCP the user selected, walk them through setup and configuration:
+
+**If Slack selected:**
+1. Guide: Cursor → Settings → MCP → Add Slack MCP → authorize workspace
+2. Ask them to verify: "try asking 'search Slack for recent messages' in chat"
+3. Then ask config questions:
+   - VOC / feedback channel? (e.g. #product-feedback)
+   - Slack DM recipient for daily plans? (user ID or handle)
+   - Channel ID? (optional)
+
+**If Google Drive selected:**
+1. Guide: Cursor → Settings → MCP → Add Google Drive MCP → authorize Google account
+2. Ask them to verify: "try asking 'list my recent Google Docs' in chat"
+3. Then ask config questions:
+   - Monday Planning doc ID?
+   - Daily Standup doc ID?
+   - PMO / status sheet URL? (optional)
+
+**If Jira selected:**
+1. Guide: Cursor → Settings → MCP → Add Jira MCP → authorize Atlassian account
+2. Ask them to verify: "try asking 'list my Jira tickets' in chat"
+3. No additional config needed — just set `jira: true` in tools.
+
+**If Figma selected:**
+1. Guide: Cursor → Settings → MCP → Add Figma MCP → authorize Figma account
+2. Ask them to verify: "share a Figma URL and ask 'describe this design'"
+3. No additional config needed — just set `figma: true` in tools.
+
+**If Databricks selected:**
+1. Guide: Cursor → Settings → MCP → Add Databricks MCP → connect workspace
+2. Ask them to verify: "try asking 'list my Databricks notebooks' in chat"
+3. No additional config needed — just set `databricks: true` in tools.
 
 ### Batch 8: Skills & agents
 - Include these core skills? (Y/N each; default Y):

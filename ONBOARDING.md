@@ -137,19 +137,36 @@ The `knowledge/` directory holds strategy and domain docs that agents and rules 
 
 ## Part 4: Tools & Integrations (optional)
 
-> **All 15+ skills work without any integrations.** This section is only needed if you want the 3 agents that pull live data from Slack and Google Drive.
+> **All 15+ skills work without any integrations.** This section is only needed if you want agents that pull live data from your tools.
 
-### Q6. Which tools do you use?
+### Q6. Which MCPs do you want to connect?
 
-| Tool | Use it? (Y/N) | Notes |
-|------|----------------|-------|
-| **Slack** | | Needed for VOC analyzer, weekly planner, exec-update-generator |
-| **Google Drive/Docs** | | Needed for weekly planner, exec-update-generator |
-| **Jira** | | Optional: Jira MCP for agents |
-| **Figma** | | Optional: design-to-code skills |
-| **Databricks** | | Optional: data agents |
+MCPs (Model Context Protocol servers) connect Cursor to external tools. Each user connects **their own** accounts — no shared credentials, no API keys to manage. Pick the ones you want:
 
-### Q7. Slack configuration (if you use Slack)
+| # | MCP | What it unlocks | Agents enabled |
+|---|-----|-----------------|----------------|
+| 1 | **Slack** | Search channels, send messages | VOC analyzer, weekly planner, exec-update-generator |
+| 2 | **Google Drive** | Read/write Google Docs and Sheets | Weekly planner, exec-update-generator |
+| 3 | **Jira** | Read/write tickets, track sprints | Jira-aware agents |
+| 4 | **Figma** | Read designs, design-to-code | Design workflows |
+| 5 | **Databricks** | Query data, run notebooks | Data analysis agents |
+
+**Choose by number** (e.g., "1, 2" or "all" or "none").
+
+---
+
+### Setup for each selected MCP
+
+Once you've picked your MCPs, follow the setup steps below for each one you selected.
+
+#### If you selected Slack (1):
+
+**Setup:**
+1. Open Cursor → **Settings → MCP** (or **Features → MCP**)
+2. Add the Slack MCP server and authorize with your Slack workspace
+3. Verify: in Cursor chat, ask "search Slack for recent messages" — if it works, you're set
+
+**Configuration:**
 
 | Question | Your answer | What it affects |
 |----------|-------------|-----------------|
@@ -159,7 +176,14 @@ The `knowledge/` directory holds strategy and domain docs that agents and rules 
 
 **Example:** `#product-feedback | W012WHKRA4C | C02A5A7D9U5`
 
-### Q8. Google Drive / planning docs (if you use them)
+#### If you selected Google Drive (2):
+
+**Setup:**
+1. Open Cursor → **Settings → MCP**
+2. Add the Google Drive MCP server and authorize with your Google account
+3. Verify: in Cursor chat, ask "list my recent Google Docs" — if it works, you're set
+
+**Configuration:**
 
 | Question | Your answer | What it affects |
 |----------|-------------|-----------------|
@@ -167,27 +191,32 @@ The `knowledge/` directory holds strategy and domain docs that agents and rules 
 | **Daily Standup doc ID** (append plans) | | Weekly planner — reads/writes |
 | **PMO / status sheet URL** (optional) | | Weekly planner — project status |
 
-### How to set up MCPs
+#### If you selected Jira (3):
 
-MCPs (Model Context Protocol servers) connect Cursor to external tools. Each user connects **their own** accounts — no shared credentials, no API keys to manage.
-
-**Slack MCP:**
-1. Open Cursor → **Settings → MCP** (or **Features → MCP**)
-2. Add the Slack MCP server and authorize with your Slack workspace
-3. Verify: in Cursor chat, ask "search Slack for recent messages" — if it works, you're set
-
-**Google Drive MCP:**
+**Setup:**
 1. Open Cursor → **Settings → MCP**
-2. Add the Google Drive MCP server and authorize with your Google account
-3. Verify: in Cursor chat, ask "list my recent Google Docs" — if it works, you're set
+2. Add the Jira MCP server and authorize with your Jira/Atlassian account
+3. Verify: in Cursor chat, ask "list my Jira tickets" — if it works, you're set
 
-**Other MCPs (all optional):**
+No additional configuration needed.
 
-| MCP | What it enables |
-|-----|-----------------|
-| **Jira** | Agents can read/write Jira tickets |
-| **Figma** | Design-to-code workflows |
-| **Databricks** | Data analysis agents |
+#### If you selected Figma (4):
+
+**Setup:**
+1. Open Cursor → **Settings → MCP**
+2. Add the Figma MCP server and authorize with your Figma account
+3. Verify: in Cursor chat, share a Figma URL and ask "describe this design" — if it works, you're set
+
+No additional configuration needed.
+
+#### If you selected Databricks (5):
+
+**Setup:**
+1. Open Cursor → **Settings → MCP**
+2. Add the Databricks MCP server and connect to your workspace
+3. Verify: in Cursor chat, ask "list my Databricks notebooks" — if it works, you're set
+
+No additional configuration needed.
 
 ---
 
