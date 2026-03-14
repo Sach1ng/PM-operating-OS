@@ -6,10 +6,11 @@ Welcome! This guide helps you customize the PM-OS for your role, team, and tools
 
 ## How it works
 
-1. **Answer the questions** — Run the onboarding agent in Cursor (say "onboard" or "PM-OS setup") for interactive Q&A, or edit `config/pm-os-config.yaml` manually using the questions below.
-2. **Customize the knowledge layer** — Edit files in `knowledge/` to match your product, personas, and strategy.
-3. **Run the setup script** — `./scripts/setup.sh --copy` generates your personalized rules, agents, skills, and deploys them.
-4. **Restart Cursor** — Changes load from `~/.cursor/`.
+1. **Set up prerequisites** — Install Cursor and (optionally) connect MCPs for Slack and Google Drive.
+2. **Answer the questions** — Run the onboarding agent in Cursor (say "onboard" or "PM-OS setup") for interactive Q&A, or edit `config/pm-os-config.yaml` manually using the questions below.
+3. **Customize the knowledge layer** — Edit files in `knowledge/` to match your product, personas, and strategy.
+4. **Run the setup script** — `./scripts/setup.sh --copy` generates your personalized rules, agents, skills, and deploys them.
+5. **Restart Cursor** — Changes load from `~/.cursor/`.
 
 ---
 
@@ -23,6 +24,67 @@ PM-OS is structured as an operating system with four layers:
 | **Rules (system services)** | Always-on guidance — strategic framing, domain awareness | `templates/rules/` → `output/rules/` |
 | **Skills (applications)** | On-demand PM capabilities — PRDs, launch posts, experiments | `skills/` |
 | **Agents (daemons)** | Specialized assistants — VOC analysis, exec updates, strategy review | `templates/agents/` → `output/agents/` |
+
+---
+
+## Step 0: Prerequisites & MCP Setup
+
+### What works out of the box (no MCP needed)
+
+These skills work immediately after onboarding — no external integrations required:
+
+| Skill | What it does |
+|-------|--------------|
+| prd-writer | PRD creation with governance framework |
+| working-backwards | PR/FAQ, press release, customer-first planning |
+| brainstorming | Structured ideation — turn vague ideas into plans |
+| writing-clearly | Clear, concise writing for all PM artifacts |
+| pptx-creator | Professional PowerPoint creation |
+| action-item-prioritizer | Prioritize tasks against strategic goals |
+| strategy-connector | Map any work to OKRs and strategy pillars |
+| experiment-designer | Hypothesis → experiment design → decision criteria |
+| launch-readiness | Launch checklists and go/no-go recommendations |
+| launch-post | Slack-native launch announcements |
+| exec-communicator | Executive updates, escalations, decision requests |
+| stakeholder-update | Concise status updates for leadership |
+| one-pager | Feature one-pagers — lighter than a PRD |
+| experiment-writeup | Structured experiment results writeup |
+| meeting-to-actions | Turn meeting notes into prioritized action items |
+| **strategy-reviewer** (agent) | Reviews PRDs and specs for strategic alignment |
+
+### What needs MCP setup (optional — adds superpowers)
+
+These **agents** integrate with external tools via MCP. They're optional — skip them if you don't use Slack or Google Drive.
+
+| Agent | Requires | What it does |
+|-------|----------|--------------|
+| **voc-analyzer** | Slack MCP | Analyzes customer feedback from a Slack channel |
+| **weekly-planner** | Slack MCP + Google Drive MCP | Daily/weekly planning from Google Docs + Slack |
+| **exec-update-generator** | Slack MCP + Google Drive MCP (optional) | Auto-generates leadership status updates |
+
+### How to set up MCPs
+
+MCPs (Model Context Protocol servers) connect Cursor to external tools. Each user connects **their own** accounts — no shared credentials, no API keys to manage.
+
+**Slack MCP:**
+1. Open Cursor → **Settings → MCP** (or **Features → MCP**)
+2. Add the Slack MCP server and authorize with your Slack workspace
+3. Verify: in Cursor chat, ask "search Slack for recent messages" — if it works, you're set
+
+**Google Drive MCP:**
+1. Open Cursor → **Settings → MCP**
+2. Add the Google Drive MCP server and authorize with your Google account
+3. Verify: in Cursor chat, ask "list my recent Google Docs" — if it works, you're set
+
+**Other MCPs (all optional):**
+
+| MCP | What it enables |
+|-----|-----------------|
+| **Jira** | Agents can read/write Jira tickets |
+| **Figma** | Design-to-code workflows |
+| **Databricks** | Data analysis agents |
+
+> **Don't have these tools?** No problem. Skip the MCP steps and the agents that require them. All 15+ skills work without any MCP.
 
 ---
 

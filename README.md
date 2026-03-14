@@ -91,10 +91,15 @@ If you prefer not to run the setup script:
 
 ## Requirements
 
-- **Cursor** with MCP support
-- **Slack MCP** (for VOC analyzer, weekly planner, exec update generator)
-- **Google Drive MCP** (for weekly planner, exec update generator)
+**Required:**
+- **Cursor IDE** with MCP support
 - **Python 3** (for setup script; `pip install -r requirements.txt`)
+
+**Optional (for agents that connect to external tools):**
+- **Slack MCP** — needed for VOC analyzer, weekly planner, exec update generator
+- **Google Drive MCP** — needed for weekly planner, exec update generator
+
+> **15+ skills work immediately without any MCP.** MCPs are only needed for 3 agents that pull data from Slack/Google Drive. See [ONBOARDING.md](ONBOARDING.md#step-0-prerequisites--mcp-setup) for the full breakdown.
 
 ---
 
