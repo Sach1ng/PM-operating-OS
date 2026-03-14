@@ -2,9 +2,11 @@
 """
 PM Operating System — Setup script
 Reads config/pm-os-config.yaml and generates personalized rules, agents, and skills.
+Also generates .cursor/mcp.json for selected MCPs — users just add their API keys.
 """
 
 import argparse
+import json
 import os
 import shutil
 import sys
@@ -70,6 +72,60 @@ def build_template_context(cfg: dict) -> dict:
 def render_template(env: Environment, name: str, ctx: dict) -> str:
     template = env.get_template(name)
     return template.render(ctx)
+
+
+# MCP configs we can auto-generate (official npm packages or URL-based).
+# Other MCPs: user adds via Cursor Marketplace one-click.
+MCP_CONFIGS = {
+    "slack": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-slack"],
+        "env": {
+            "SLACK_BOT_TOKEN": "YOUR_SLACK_BOT_TOKEN",
+            "SLACK_TEAM_ID": "YOUR_SLACK_TEAM_ID",
+        },
+    },
+    "google_drive": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-gdrive"],
+        "env": {},
+    },
+    "github": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-github"],
+        "env": {"GITHUB_PERSONAL_ACCESS_TOKEN": "YOUR_GITHUB_TOKEN"},
+    },
+    "figma": {
+        "url": "https://mcp.figma.com/mcp",
+        "headers": {},
+    },
+}
+
+
+def generate_mcp_config(cfg: dict) -> None:
+    """Generate .cursor/mcp.json from tools config. Users replace placeholders with real keys."""
+    tools = cfg.get("tools", {})
+    if not any(tools.get(k) for k in MCP_CONFIGS if k in tools):
+        return
+
+    mcp_servers = {}
+    for tool_key, enabled in tools.items():
+        if not enabled or tool_key not in MCP_CONFIGS:
+            continue
+        mcp_servers[tool_key] = MCP_CONFIGS[tool_key].copy()
+        # Deep copy env to avoid mutating template
+        if "env" in mcp_servers[tool_key]:
+            mcp_servers[tool_key]["env"] = dict(mcp_servers[tool_key]["env"])
+
+    if not mcp_servers:
+        return
+
+    cursor_dir = PROJECT_ROOT / ".cursor"
+    cursor_dir.mkdir(exist_ok=True)
+    mcp_path = cursor_dir / "mcp.json"
+    mcp_path.write_text(json.dumps({"mcpServers": mcp_servers}, indent=2), encoding="utf-8")
+    print(f"  Generated .cursor/mcp.json ({len(mcp_servers)} MCPs)")
+    print("  → Replace placeholders in .cursor/mcp.json with your API keys. See MCP_SETUP.md")
 
 
 def main():
@@ -214,6 +270,9 @@ def main():
             print(f"  Generated skills/action-item-prioritizer/SKILL.md")
 
     print(f"\nOutput written to: {output_dir}")
+
+    # Always generate MCP config when tools are selected (project-level .cursor/mcp.json)
+    generate_mcp_config(cfg)
 
     if mode == "output_only":
         print("\nNext: Copy or symlink from output/ to your Cursor directory.")

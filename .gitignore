@@ -1,5 +1,8 @@
 # Generated output (run setup to regenerate)
 output/
 
+# MCP config — contains API keys after you fill in placeholders
+.cursor/mcp.json
+
 # Local config overrides (optional - keep template in git)
 # config/my-config.yaml

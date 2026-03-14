@@ -61,7 +61,7 @@ Invoke when the user says:
 - Strategy doc URL? (optional — agent can extract context from it)
 
 ### Batch 5: MCP Selection (optional — all 15+ skills work without any integrations)
-First explain: "MCPs are plugins that connect Cursor to external tools. PM-OS doesn't include any — you install each one yourself in Cursor Settings → MCP. Think of them like browser extensions."
+First explain: "When you run setup, PM-OS auto-generates .cursor/mcp.json with configs for the MCPs you pick. You just add your API keys — we handle the rest. See MCP_SETUP.md for where to get each key."
 
 Then present this menu and ask the user to pick by number:
 ```

@@ -98,10 +98,10 @@ If you prefer not to run the setup script:
 - **Python 3** (for setup script; `pip install -r requirements.txt`)
 
 **Optional (for agents that connect to external tools):**
-- **Slack MCP** — needed for VOC analyzer, weekly planner, exec update generator
-- **Google Drive MCP** — needed for weekly planner, exec update generator
+- **Slack, Google Drive, GitHub, Figma** — Setup auto-generates `.cursor/mcp.json` for these. You just add your API keys. See [MCP_SETUP.md](MCP_SETUP.md).
+- **Jira, Linear, Notion, etc.** — Add via Cursor Settings → Tools & MCP (one-click from Marketplace).
 
-> **15+ skills work immediately without any MCP.** MCPs are only needed for 3 agents that pull data from Slack/Google Drive. See [ONBOARDING.md](ONBOARDING.md#step-0-prerequisites--mcp-setup) for the full breakdown.
+> **15+ skills work immediately without any MCP.** Setup generates MCP config for you — you only need to add your keys. See [MCP_SETUP.md](MCP_SETUP.md).
 
 ---
 

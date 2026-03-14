@@ -141,13 +141,15 @@ The `knowledge/` directory holds strategy and domain docs that agents and rules 
 
 ### What are MCPs?
 
-MCPs (Model Context Protocol servers) are plugins that connect Cursor to external tools. **PM-OS does not include any MCPs** — you install and authorize each one yourself in Cursor settings. Think of them like browser extensions: you pick the ones you need, connect your own accounts, and Cursor's agents can then read/write data from those tools.
+MCPs (Model Context Protocol servers) are plugins that connect Cursor to external tools. When you run setup, **PM-OS auto-generates** `.cursor/mcp.json` with configs for the MCPs you selected — you just add your API keys and you're done.
 
-**How to install any MCP:**
-1. Open Cursor → **Settings → MCP** (or **Features → MCP**)
-2. Browse or search for the MCP server you want
-3. Add it and authorize with your account
-4. Verify it works by asking Cursor a test question
+**We set it up for you:**
+1. You pick which MCPs you want during onboarding
+2. Setup generates `.cursor/mcp.json` with the right config
+3. You replace placeholders (e.g. `YOUR_SLACK_BOT_TOKEN`) with your real keys
+4. Restart Cursor — done
+
+See **[MCP_SETUP.md](MCP_SETUP.md)** for where to get each key.
 
 ### Q6. Which MCPs do you want to connect?
 
