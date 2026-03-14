@@ -46,9 +46,9 @@ No keys needed — uses Figma's hosted MCP. When you use it, you'll be prompted 
 
 ### Browser (Playwright)
 
-**No keys needed.** Enabled by default. Uses `@playwright/mcp` to give Cursor a browser it can control — navigate pages, click buttons, fill forms, take screenshots. Requires Node.js 18+.
+**No keys needed.** Enabled by default. Uses [`@playwright/mcp`](https://www.npmjs.com/package/@playwright/mcp) (official repo: [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp)) to give Cursor a browser it can control — navigate pages, click buttons, fill forms, take screenshots. Requires Node.js 18+.
 
-Works out of the box for testing web apps, verifying UI changes, or walking through demo flows.
+Works out of the box for testing web apps, verifying UI changes, or walking through demo flows. For Cursor install steps, config options, and tools list, see the [Playwright MCP README](https://github.com/microsoft/playwright-mcp).
 
 ---
 
