@@ -2,6 +2,8 @@
 
 A self-serve Cursor setup for product managers: rules, skills, and agents that adapt to your role, goals, and tools.
 
+**Created by [@Sach1ng](https://github.com/Sach1ng) and [@hardiktiwari](https://github.com/hardiktiwari)**
+
 ---
 
 ## Quick start (self-serve onboarding)
@@ -114,6 +116,13 @@ If you enabled the VOC analyzer:
 See [agents/README.md](agents/README.md) for details.
 
 ---
+
+## Authors
+
+| | GitHub | Role |
+|---|---|---|
+| **Sachin** | [@Sach1ng](https://github.com/Sach1ng) | Co-creator |
+| **Hardik** | [@hardiktiwari](https://github.com/hardiktiwari) | Co-creator |
 
 ## Contributing
 
