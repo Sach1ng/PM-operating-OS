@@ -191,6 +191,13 @@ def main():
         shutil.copy2(onboarding_src, output_dir / "agents" / "onboarding.md")
         print(f"  Copied agents/onboarding.md")
 
+    # 2b. Company researcher agent (orchestrator) and subagents (always — for onboarding and ad-hoc use)
+    for agent_name in ("company-researcher", "company-strategy", "company-product-signals"):
+        agent_src = PROJECT_ROOT / ".cursor" / "agents" / f"{agent_name}.md"
+        if agent_src.exists():
+            shutil.copy2(agent_src, output_dir / "agents" / f"{agent_name}.md")
+            print(f"  Copied agents/{agent_name}.md")
+
     # 3. VOC analyzer (if Slack + enabled)
     if tools.get("slack") and agents_cfg.get("voc_analyzer"):
         voc_content = render_template(env, "agents/voc-analyzer.md.template", ctx)

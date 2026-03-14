@@ -31,18 +31,29 @@ PM-OS is structured as an operating system with four layers:
 
 ## Part 1: Identity & Role
 
-> **Start here.** Your identity and domain context are what make PM-OS useful. Everything else is optional.
+### Step 1: Company and role (asked first)
 
-### Q1. What's your role and product focus?
+The onboarding agent asks these **two questions first**:
 
 | Question | Your answer | What it affects |
 |----------|-------------|-----------------|
+| **Company name** (e.g., Acme Corp, Intuit, your startup) | | Triggers company research; PRD template, org references |
 | **Role title** (e.g., Principal PM, Senior PM, Group PM) | | Chief-of-staff rule, domain context rule |
+
+After you answer, a **research subagent** runs automatically: it searches LinkedIn (company page/overview) and the web for your company’s strategy, recent initiatives, and key priorities. The agent uses that summary to tailor the rest of onboarding. You don’t need to do anything—just wait for the agent to confirm and continue.
+
+**Example:** `Intuit` | `Principal PM`
+
+---
+
+### Q1. Product focus (asked after Step 1)
+
+| Question | Your answer | What it affects |
+|----------|-------------|-----------------|
 | **Product/initiative name** (e.g., Payments, Marketplace, Analytics) | | Rules, skills, agent context, knowledge layer |
 | **Product type** (0-1 / growth / platform / other) | | Prioritization framing in rules |
-| **Company/org** (e.g., Acme Corp, your startup name) | | PRD template choice, org references |
 
-**Example:** `Principal PM | Payments Platform | 0-1 product | Acme Corp`
+**Example:** `Payments Platform | 0-1 product`
 
 ---
 

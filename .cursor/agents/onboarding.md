@@ -23,114 +23,67 @@ Invoke when the user says:
 
 ## Workflow
 
-1. **Confirm** — "I'll ask you a few questions to configure PM-OS. We'll start with who you are and what you're working on — that's what makes PM-OS powerful. Your answers will be written to `config/pm-os-config.yaml`. Ready?"
-2. **Ask in batches** — Group related questions. One batch per message. Wait for the user's reply before the next batch. Start with context (identity, goals, domain) — this is the highest-value part.
-3. **Parse answers** — Extract values from natural language (e.g. "Sarah and Mike" → `["Sarah", "Mike"]`).
-4. **Write config** — When all answers are collected, write the complete YAML to `config/pm-os-config.yaml`.
-5. **Run setup** — Execute `./scripts/setup.sh --copy` from the repo root to generate and deploy to `~/.cursor/`.
-6. **Knowledge layer reminder** — Tell the user to customize `knowledge/` files for their product.
-7. **Done** — Tell the user: "Config saved and deployed. Customize knowledge/ for your product, then restart Cursor."
+1. **Prerequisites check** — Before starting Q&A, explain what works out of the box vs. what needs MCP setup. Ask: "Do you have Slack MCP and/or Google Drive MCP connected in Cursor? (If not sure, no worries — 15+ skills work without any MCP. MCPs are only needed for 3 agents: VOC analyzer, weekly planner, and exec update generator.)"
+2. **Confirm** — "I'll ask you a few questions to configure PM-OS. Your answers will be written to `config/pm-os-config.yaml`. Ready?"
+3. **Step 1: Company and role** — Ask only: (a) Company name, (b) Your role title. Wait for the user's reply.
+4. **Trigger company research subagent** — After the user provides company name and role, call the **company-researcher** subagent:
+   - Use the **mcp_task** tool with `subagent_type: "company-researcher"`.
+   - **description:** "Research company for onboarding"
+   - **prompt:** "Research this company for PM-OS onboarding. Company: [COMPANY_NAME]. User's role: [ROLE]. Produce your standard summary: LinkedIn and web overview, strategy, recent initiatives, key priorities, and source hints."
+   - Replace [COMPANY_NAME] and [ROLE] with the exact company name and role title the user gave. Do not assume or guess.
+   - After the subagent returns, briefly summarize the research for the user (1–2 sentences) and say you'll use it to tailor the rest of onboarding. Then continue with the next batch.
+5. **Ask remaining batches** — Group related questions. One batch per message. Wait for the user's reply before the next batch. Use the company research context to tailor phrasing or defaults where helpful.
+6. **Parse answers** — Extract values from natural language (e.g. "Sarah and Mike" → `["Sarah", "Mike"]`).
+7. **Write config** — When all answers are collected, write the complete YAML to `config/pm-os-config.yaml`.
+8. **Run setup** — Execute `./scripts/setup.sh --copy` from the repo root to generate and deploy to `~/.cursor/`.
+9. **Knowledge layer reminder** — Tell the user to customize `knowledge/` files for their product.
+10. **Done** — Tell the user: "Config saved and deployed. Customize knowledge/ for your product, then restart Cursor."
 
 ---
 
 ## Question batches (ask in this order)
 
-### Batch 1: Identity (start here — this is what matters most)
-- Role title? (e.g. Principal PM, Senior PM)
+### Batch 0: Prerequisites
+- Do you have Slack MCP connected in Cursor? (Y/N — needed for VOC analyzer, weekly planner, exec updates)
+- Do you have Google Drive MCP connected in Cursor? (Y/N — needed for weekly planner, exec updates)
+- If N to both: "No problem! All 15+ skills work without any MCP. I'll skip the Slack/Drive config questions and you can set those up later if you want. Let's continue."
+- If N to one: Explain what they'll miss and offer setup instructions (Cursor → Settings → MCP → add the server → authorize). Or skip and set up later.
+
+### Step 1 (Batch 1): Company and role only
+Ask only these two questions in one message. Do not ask product, product type, or other identity fields yet.
+- **Company name?** (e.g. Acme Corp, Intuit, your startup name)
+- **Your role title?** (e.g. Principal PM, Senior PM, Group PM)
+
+After the user replies, call the **company-researcher** subagent via mcp_task with `subagent_type: "company-researcher"` and a prompt that includes the company name and role (see Workflow step 4). Then continue.
+
+### Batch 2: Identity (rest)
 - Product/initiative name? (e.g. Payments, Marketplace)
 - Product type? (0-1 / growth / platform / other)
-- Company/org?
 
-### Batch 2: Stakeholders
+### Batch 3: Stakeholders
 - Direct manager(s) — names or Slack handles?
 - Other VIP senders to always prioritize?
 - Org structure in one line? (e.g. "I report to Sarah, VP of Product")
 
-### Batch 3: Goals
+### Batch 4: Goals
 - Top 2–3 strategic goals this quarter? For each: name, metric, focus. (e.g. "Self-serve onboarding — 45K signups — acquisition, pipeline, conversion")
 - Low-priority areas to push to backlog?
 - Things to never prioritize?
 
-### Batch 4: Domain Context (most impactful for skill quality)
-- Domain name? (e.g. Payments, Marketplace)
-- Customer segments? (who you serve)
-- Key metrics? (how you measure success)
-- Competitors? (competitive landscape)
-- Strategic pillars? (your team's strategic bets)
-- Product principles? (how you make decisions)
-- Strategy doc URL? (optional — agent can extract context from it)
+### Batch 5: Tools
+- Use Slack? (Y/N)
+- Use Google Drive/Docs? (Y/N)
+- Use Jira, Figma, Databricks? (Y/N each, optional)
 
-### Batch 5: MCP Selection (optional — all 15+ skills work without any integrations)
-First explain: "When you run setup, PM-OS auto-generates .cursor/mcp.json with configs for the MCPs you pick. You just add your API keys — we handle the rest. See MCP_SETUP.md for where to get each key."
+### Batch 6: Slack (if Y)
+- VOC / feedback channel? (e.g. #product-feedback)
+- Slack DM recipient for daily plans? (user ID or handle)
+- Channel ID? (optional)
 
-Then present this menu and ask the user to pick by number:
-```
-Which MCPs do you want to connect? Pick the ones you already use.
-
-Communication & Collaboration:
-  1. Slack          — VOC analysis, weekly planning, exec updates
-  2. Gmail/Email    — stakeholder communication, follow-ups
-  3. Microsoft Teams — VOC analysis, team communication
-
-Documents & Knowledge:
-  4. Google Drive   — weekly planning, exec updates, PRD collaboration
-  5. Notion         — PRDs, wikis, meeting notes, roadmaps
-  6. Confluence     — enterprise documentation, specs
-
-Project Management:
-  7. Jira           — backlog management, sprint planning
-  8. Linear         — issue tracking, roadmap management
-  9. Asana          — task management, cross-functional coordination
-  10. GitHub        — engineering coordination, release tracking
-
-Design:
-  11. Figma         — design reviews, spec writing
-
-Data & Analytics:
-  12. Databricks    — metric deep-dives, experiment analysis
-  13. Snowflake     — metric reporting, ad-hoc analysis
-  14. PostgreSQL/SQL — quick data pulls
-  15. Amplitude     — feature adoption, funnel analysis
-  16. Mixpanel      — event tracking, user behavior
-
-CRM & Customer:
-  17. Salesforce    — customer insights, enterprise deal context
-  18. HubSpot       — lead data, customer lifecycle
-  19. Zendesk       — customer pain points, support tickets
-  20. Intercom      — customer feedback, support trends
-
-Pick by number (e.g. "1, 4, 7" or "none"):
-```
-- If "none": "No problem! All 15+ skills work without any MCP. You can always add these later. Moving on."
-- If they pick any: Proceed to setup for each selected MCP one at a time.
-
-### Batch 6: Setup for each selected MCP (one at a time)
-For each MCP the user selected, walk them through:
-1. **Install:** Cursor → Settings → MCP → find and add the server
-2. **Authorize:** Connect their account
-3. **Verify:** Ask a test question
-4. **Configure:** Only Slack and Google Drive need PM-OS config questions
-
-**If Slack selected (1):**
-1. Guide: Cursor → Settings → MCP → Add Slack MCP → authorize workspace
-2. Verify: "try asking 'search Slack for recent messages' in chat"
-3. Config questions:
-   - VOC / feedback channel? (e.g. #product-feedback)
-   - Slack DM recipient for daily plans? (user ID or handle)
-   - Channel ID? (optional)
-
-**If Google Drive selected (4):**
-1. Guide: Cursor → Settings → MCP → Add Google Drive MCP → authorize Google account
-2. Verify: "try asking 'list my recent Google Docs' in chat"
-3. Config questions:
-   - Monday Planning doc ID?
-   - Daily Standup doc ID?
-   - PMO / status sheet URL? (optional)
-
-**All other MCPs (2-3, 5-20):**
-1. Guide: Cursor → Settings → MCP → find the server → authorize
-2. Verify with a relevant test question
-3. No PM-OS config needed — just set the flag to `true` in tools section of config YAML
+### Batch 7: Google Drive (if Y)
+- Monday Planning doc ID?
+- Daily Standup doc ID?
+- PMO / status sheet URL? (optional)
 
 ### Batch 8: Skills & agents
 - Include these core skills? (Y/N each; default Y):
