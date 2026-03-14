@@ -30,11 +30,32 @@ deprioritize:
 
 # --- Part 5: Tools ---
 tools:
+  # Communication & Collaboration
   slack: true
+  gmail: false
+  microsoft_teams: false
+  # Documents & Knowledge
   google_drive: true
+  notion: false
+  confluence: false
+  # Project Management
   jira: false
+  linear: false
+  asana: false
+  github: false
+  # Design
   figma: false
+  # Data & Analytics
   databricks: false
+  snowflake: false
+  postgresql: false
+  amplitude: false
+  mixpanel: false
+  # CRM & Customer
+  salesforce: false
+  hubspot: false
+  zendesk: false
+  intercom: false
 
 # --- Part 6: Slack ---
 slack:

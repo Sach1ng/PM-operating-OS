@@ -61,54 +61,76 @@ Invoke when the user says:
 - Strategy doc URL? (optional — agent can extract context from it)
 
 ### Batch 5: MCP Selection (optional — all 15+ skills work without any integrations)
-Present this menu and ask the user to pick by number:
-```
-Which MCPs do you want to connect? (All skills work without any — these add superpowers to agents)
+First explain: "MCPs are plugins that connect Cursor to external tools. PM-OS doesn't include any — you install each one yourself in Cursor Settings → MCP. Think of them like browser extensions."
 
-1. Slack — VOC analyzer, weekly planner, exec updates
-2. Google Drive — weekly planner, exec updates
-3. Jira — ticket tracking agents
-4. Figma — design-to-code workflows
-5. Databricks — data analysis agents
-
-Pick by number (e.g. "1, 2" or "all" or "none"):
+Then present this menu and ask the user to pick by number:
 ```
-- If "none": "No problem! All 15+ skills work without any MCP. You can always set these up later. Moving on."
-- If they pick any: Proceed to the setup steps for each selected MCP below.
+Which MCPs do you want to connect? Pick the ones you already use.
+
+Communication & Collaboration:
+  1. Slack          — VOC analysis, weekly planning, exec updates
+  2. Gmail/Email    — stakeholder communication, follow-ups
+  3. Microsoft Teams — VOC analysis, team communication
+
+Documents & Knowledge:
+  4. Google Drive   — weekly planning, exec updates, PRD collaboration
+  5. Notion         — PRDs, wikis, meeting notes, roadmaps
+  6. Confluence     — enterprise documentation, specs
+
+Project Management:
+  7. Jira           — backlog management, sprint planning
+  8. Linear         — issue tracking, roadmap management
+  9. Asana          — task management, cross-functional coordination
+  10. GitHub        — engineering coordination, release tracking
+
+Design:
+  11. Figma         — design reviews, spec writing
+
+Data & Analytics:
+  12. Databricks    — metric deep-dives, experiment analysis
+  13. Snowflake     — metric reporting, ad-hoc analysis
+  14. PostgreSQL/SQL — quick data pulls
+  15. Amplitude     — feature adoption, funnel analysis
+  16. Mixpanel      — event tracking, user behavior
+
+CRM & Customer:
+  17. Salesforce    — customer insights, enterprise deal context
+  18. HubSpot       — lead data, customer lifecycle
+  19. Zendesk       — customer pain points, support tickets
+  20. Intercom      — customer feedback, support trends
+
+Pick by number (e.g. "1, 4, 7" or "none"):
+```
+- If "none": "No problem! All 15+ skills work without any MCP. You can always add these later. Moving on."
+- If they pick any: Proceed to setup for each selected MCP one at a time.
 
 ### Batch 6: Setup for each selected MCP (one at a time)
-For each MCP the user selected, walk them through setup and configuration:
+For each MCP the user selected, walk them through:
+1. **Install:** Cursor → Settings → MCP → find and add the server
+2. **Authorize:** Connect their account
+3. **Verify:** Ask a test question
+4. **Configure:** Only Slack and Google Drive need PM-OS config questions
 
-**If Slack selected:**
+**If Slack selected (1):**
 1. Guide: Cursor → Settings → MCP → Add Slack MCP → authorize workspace
-2. Ask them to verify: "try asking 'search Slack for recent messages' in chat"
-3. Then ask config questions:
+2. Verify: "try asking 'search Slack for recent messages' in chat"
+3. Config questions:
    - VOC / feedback channel? (e.g. #product-feedback)
    - Slack DM recipient for daily plans? (user ID or handle)
    - Channel ID? (optional)
 
-**If Google Drive selected:**
+**If Google Drive selected (4):**
 1. Guide: Cursor → Settings → MCP → Add Google Drive MCP → authorize Google account
-2. Ask them to verify: "try asking 'list my recent Google Docs' in chat"
-3. Then ask config questions:
+2. Verify: "try asking 'list my recent Google Docs' in chat"
+3. Config questions:
    - Monday Planning doc ID?
    - Daily Standup doc ID?
    - PMO / status sheet URL? (optional)
 
-**If Jira selected:**
-1. Guide: Cursor → Settings → MCP → Add Jira MCP → authorize Atlassian account
-2. Ask them to verify: "try asking 'list my Jira tickets' in chat"
-3. No additional config needed — just set `jira: true` in tools.
-
-**If Figma selected:**
-1. Guide: Cursor → Settings → MCP → Add Figma MCP → authorize Figma account
-2. Ask them to verify: "share a Figma URL and ask 'describe this design'"
-3. No additional config needed — just set `figma: true` in tools.
-
-**If Databricks selected:**
-1. Guide: Cursor → Settings → MCP → Add Databricks MCP → connect workspace
-2. Ask them to verify: "try asking 'list my Databricks notebooks' in chat"
-3. No additional config needed — just set `databricks: true` in tools.
+**All other MCPs (2-3, 5-20):**
+1. Guide: Cursor → Settings → MCP → find the server → authorize
+2. Verify with a relevant test question
+3. No PM-OS config needed — just set the flag to `true` in tools section of config YAML
 
 ### Batch 8: Skills & agents
 - Include these core skills? (Y/N each; default Y):

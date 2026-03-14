@@ -139,34 +139,87 @@ The `knowledge/` directory holds strategy and domain docs that agents and rules 
 
 > **All 15+ skills work without any integrations.** This section is only needed if you want agents that pull live data from your tools.
 
+### What are MCPs?
+
+MCPs (Model Context Protocol servers) are plugins that connect Cursor to external tools. **PM-OS does not include any MCPs** — you install and authorize each one yourself in Cursor settings. Think of them like browser extensions: you pick the ones you need, connect your own accounts, and Cursor's agents can then read/write data from those tools.
+
+**How to install any MCP:**
+1. Open Cursor → **Settings → MCP** (or **Features → MCP**)
+2. Browse or search for the MCP server you want
+3. Add it and authorize with your account
+4. Verify it works by asking Cursor a test question
+
 ### Q6. Which MCPs do you want to connect?
 
-MCPs (Model Context Protocol servers) connect Cursor to external tools. Each user connects **their own** accounts — no shared credentials, no API keys to manage. Pick the ones you want:
+Pick the ones relevant to your workflow. You can always add more later.
 
-| # | MCP | What it unlocks | Agents enabled |
-|---|-----|-----------------|----------------|
-| 1 | **Slack** | Search channels, send messages | VOC analyzer, weekly planner, exec-update-generator |
-| 2 | **Google Drive** | Read/write Google Docs and Sheets | Weekly planner, exec-update-generator |
-| 3 | **Jira** | Read/write tickets, track sprints | Jira-aware agents |
-| 4 | **Figma** | Read designs, design-to-code | Design workflows |
-| 5 | **Databricks** | Query data, run notebooks | Data analysis agents |
+#### Communication & Collaboration
 
-**Choose by number** (e.g., "1, 2" or "all" or "none").
+| # | MCP | What it does | PM use case |
+|---|-----|-------------|-------------|
+| 1 | **Slack** | Search channels, send messages, read threads | VOC analysis, weekly planning, exec updates |
+| 2 | **Gmail / Email** | Read and draft emails | Stakeholder communication, follow-ups |
+| 3 | **Microsoft Teams** | Search chats and channels | VOC analysis, team communication (Teams-based orgs) |
+
+#### Documents & Knowledge
+
+| # | MCP | What it does | PM use case |
+|---|-----|-------------|-------------|
+| 4 | **Google Drive** | Read/write Docs, Sheets, Slides | Weekly planning, exec updates, PRD collaboration |
+| 5 | **Notion** | Read/write pages and databases | PRDs, wikis, meeting notes, roadmaps |
+| 6 | **Confluence** | Read/write wiki pages | Enterprise documentation, specs, decision logs |
+
+#### Project Management
+
+| # | MCP | What it does | PM use case |
+|---|-----|-------------|-------------|
+| 7 | **Jira** | Read/write tickets, track sprints | Backlog management, sprint planning, status tracking |
+| 8 | **Linear** | Read/write issues, projects, cycles | Issue tracking, roadmap management |
+| 9 | **Asana** | Read/write tasks and projects | Task management, cross-functional coordination |
+| 10 | **GitHub** | Read/write issues, PRs, repos | Engineering coordination, release tracking |
+
+#### Design
+
+| # | MCP | What it does | PM use case |
+|---|-----|-------------|-------------|
+| 11 | **Figma** | Read designs, inspect components | Design reviews, spec writing, design-to-requirements |
+
+#### Data & Analytics
+
+| # | MCP | What it does | PM use case |
+|---|-----|-------------|-------------|
+| 12 | **Databricks** | Query data, run notebooks | Metric deep-dives, experiment analysis |
+| 13 | **Snowflake** | Query data warehouse | Metric reporting, ad-hoc analysis |
+| 14 | **PostgreSQL / SQL** | Direct database queries | Quick data pulls, validation |
+| 15 | **Amplitude** | Read product analytics | Feature adoption, funnel analysis, retention |
+| 16 | **Mixpanel** | Read product analytics | Event tracking, user behavior analysis |
+
+#### CRM & Customer
+
+| # | MCP | What it does | PM use case |
+|---|-----|-------------|-------------|
+| 17 | **Salesforce** | Read CRM data, accounts, opportunities | Customer insights, enterprise deal context |
+| 18 | **HubSpot** | Read CRM and marketing data | Lead data, customer lifecycle |
+| 19 | **Zendesk** | Read support tickets | Customer pain points, bug reports, VOC |
+| 20 | **Intercom** | Read conversations and tickets | Customer feedback, support trends |
+
+**Choose by number** (e.g., "1, 4, 7" or "none"). You can always add more later.
 
 ---
 
 ### Setup for each selected MCP
 
-Once you've picked your MCPs, follow the setup steps below for each one you selected.
+For each MCP you selected, follow the same pattern:
 
-#### If you selected Slack (1):
+1. **Install:** Cursor → Settings → MCP → find and add the MCP server
+2. **Authorize:** Connect your account (OAuth, API key, or token — depends on the MCP)
+3. **Verify:** Ask Cursor a test question to confirm it works (see examples below)
 
-**Setup:**
-1. Open Cursor → **Settings → MCP** (or **Features → MCP**)
-2. Add the Slack MCP server and authorize with your Slack workspace
-3. Verify: in Cursor chat, ask "search Slack for recent messages" — if it works, you're set
+#### Slack (1) — requires configuration
 
-**Configuration:**
+**Verify:** Ask "search Slack for recent messages"
+
+**Configuration (needed for PM-OS agents):**
 
 | Question | Your answer | What it affects |
 |----------|-------------|-----------------|
@@ -174,16 +227,11 @@ Once you've picked your MCPs, follow the setup steps below for each one you sele
 | **Slack DM recipient** for daily plans (user ID or handle) | | Weekly planner — where to send plans |
 | **Channel ID** (optional; if known) | | VOC agent query |
 
-**Example:** `#product-feedback | W012WHKRA4C | C02A5A7D9U5`
+#### Google Drive (4) — requires configuration
 
-#### If you selected Google Drive (2):
+**Verify:** Ask "list my recent Google Docs"
 
-**Setup:**
-1. Open Cursor → **Settings → MCP**
-2. Add the Google Drive MCP server and authorize with your Google account
-3. Verify: in Cursor chat, ask "list my recent Google Docs" — if it works, you're set
-
-**Configuration:**
+**Configuration (needed for PM-OS agents):**
 
 | Question | Your answer | What it affects |
 |----------|-------------|-----------------|
@@ -191,32 +239,9 @@ Once you've picked your MCPs, follow the setup steps below for each one you sele
 | **Daily Standup doc ID** (append plans) | | Weekly planner — reads/writes |
 | **PMO / status sheet URL** (optional) | | Weekly planner — project status |
 
-#### If you selected Jira (3):
+#### All other MCPs — no PM-OS configuration needed
 
-**Setup:**
-1. Open Cursor → **Settings → MCP**
-2. Add the Jira MCP server and authorize with your Jira/Atlassian account
-3. Verify: in Cursor chat, ask "list my Jira tickets" — if it works, you're set
-
-No additional configuration needed.
-
-#### If you selected Figma (4):
-
-**Setup:**
-1. Open Cursor → **Settings → MCP**
-2. Add the Figma MCP server and authorize with your Figma account
-3. Verify: in Cursor chat, share a Figma URL and ask "describe this design" — if it works, you're set
-
-No additional configuration needed.
-
-#### If you selected Databricks (5):
-
-**Setup:**
-1. Open Cursor → **Settings → MCP**
-2. Add the Databricks MCP server and connect to your workspace
-3. Verify: in Cursor chat, ask "list my Databricks notebooks" — if it works, you're set
-
-No additional configuration needed.
+For MCPs 2-3, 5-20: just install and authorize. No additional PM-OS config required — Cursor's agents will automatically use them when relevant. Set the corresponding flag to `true` in `config/pm-os-config.yaml` under `tools:`.
 
 ---
 
