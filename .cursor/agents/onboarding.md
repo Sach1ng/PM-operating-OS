@@ -23,26 +23,19 @@ Invoke when the user says:
 
 ## Workflow
 
-1. **Prerequisites check** — Before starting Q&A, explain what works out of the box vs. what needs MCP setup. Ask: "Do you have Slack MCP and/or Google Drive MCP connected in Cursor? (If not sure, no worries — 15+ skills work without any MCP. MCPs are only needed for 3 agents: VOC analyzer, weekly planner, and exec update generator.)"
-2. **Confirm** — "I'll ask you a few questions to configure PM-OS. Your answers will be written to `config/pm-os-config.yaml`. Ready?"
-3. **Ask in batches** — Group related questions. One batch per message. Wait for the user's reply before the next batch.
-4. **Parse answers** — Extract values from natural language (e.g. "Sarah and Mike" → `["Sarah", "Mike"]`).
-5. **Write config** — When all answers are collected, write the complete YAML to `config/pm-os-config.yaml`.
-6. **Run setup** — Execute `./scripts/setup.sh --copy` from the repo root to generate and deploy to `~/.cursor/`.
-7. **Knowledge layer reminder** — Tell the user to customize `knowledge/` files for their product.
-8. **Done** — Tell the user: "Config saved and deployed. Customize knowledge/ for your product, then restart Cursor."
+1. **Confirm** — "I'll ask you a few questions to configure PM-OS. We'll start with who you are and what you're working on — that's what makes PM-OS powerful. Your answers will be written to `config/pm-os-config.yaml`. Ready?"
+2. **Ask in batches** — Group related questions. One batch per message. Wait for the user's reply before the next batch. Start with context (identity, goals, domain) — this is the highest-value part.
+3. **Parse answers** — Extract values from natural language (e.g. "Sarah and Mike" → `["Sarah", "Mike"]`).
+4. **Write config** — When all answers are collected, write the complete YAML to `config/pm-os-config.yaml`.
+5. **Run setup** — Execute `./scripts/setup.sh --copy` from the repo root to generate and deploy to `~/.cursor/`.
+6. **Knowledge layer reminder** — Tell the user to customize `knowledge/` files for their product.
+7. **Done** — Tell the user: "Config saved and deployed. Customize knowledge/ for your product, then restart Cursor."
 
 ---
 
 ## Question batches (ask in this order)
 
-### Batch 0: Prerequisites
-- Do you have Slack MCP connected in Cursor? (Y/N — needed for VOC analyzer, weekly planner, exec updates)
-- Do you have Google Drive MCP connected in Cursor? (Y/N — needed for weekly planner, exec updates)
-- If N to both: "No problem! All 15+ skills work without any MCP. I'll skip the Slack/Drive config questions and you can set those up later if you want. Let's continue."
-- If N to one: Explain what they'll miss and offer setup instructions (Cursor → Settings → MCP → add the server → authorize). Or skip and set up later.
-
-### Batch 1: Identity
+### Batch 1: Identity (start here — this is what matters most)
 - Role title? (e.g. Principal PM, Senior PM)
 - Product/initiative name? (e.g. Payments, Marketplace)
 - Product type? (0-1 / growth / platform / other)
@@ -58,22 +51,32 @@ Invoke when the user says:
 - Low-priority areas to push to backlog?
 - Things to never prioritize?
 
-### Batch 4: Tools
+### Batch 4: Domain Context (most impactful for skill quality)
+- Domain name? (e.g. Payments, Marketplace)
+- Customer segments? (who you serve)
+- Key metrics? (how you measure success)
+- Competitors? (competitive landscape)
+- Strategic pillars? (your team's strategic bets)
+- Product principles? (how you make decisions)
+- Strategy doc URL? (optional — agent can extract context from it)
+
+### Batch 5: Tools (optional — all 15+ skills work without any integrations)
 - Use Slack? (Y/N)
 - Use Google Drive/Docs? (Y/N)
 - Use Jira, Figma, Databricks? (Y/N each, optional)
+- If N to Slack and Drive: "No problem! All skills work without any MCP. I'll skip the Slack/Drive config. You can set those up later if you want agents that pull live data."
 
-### Batch 5: Slack (if Y)
+### Batch 6: Slack (if Y)
 - VOC / feedback channel? (e.g. #product-feedback)
 - Slack DM recipient for daily plans? (user ID or handle)
 - Channel ID? (optional)
 
-### Batch 6: Google Drive (if Y)
+### Batch 7: Google Drive (if Y)
 - Monday Planning doc ID?
 - Daily Standup doc ID?
 - PMO / status sheet URL? (optional)
 
-### Batch 7: Skills & agents
+### Batch 8: Skills & agents
 - Include these core skills? (Y/N each; default Y):
   prd-writer, working-backwards, brainstorming, writing-clearly, pptx-creator, action-item-prioritizer
 - Include these strategy/planning skills? (Y/N each; default Y):

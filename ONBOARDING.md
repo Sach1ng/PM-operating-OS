@@ -6,11 +6,13 @@ Welcome! This guide helps you customize the PM-OS for your role, team, and tools
 
 ## How it works
 
-1. **Set up prerequisites** — Install Cursor and (optionally) connect MCPs for Slack and Google Drive.
-2. **Answer the questions** — Run the onboarding agent in Cursor (say "onboard" or "PM-OS setup") for interactive Q&A, or edit `config/pm-os-config.yaml` manually using the questions below.
-3. **Customize the knowledge layer** — Edit files in `knowledge/` to match your product, personas, and strategy.
+1. **Tell it about you** — Your role, product, goals, and domain context. This is where PM-OS gets its power.
+2. **Customize the knowledge layer** — Edit files in `knowledge/` to match your product, personas, and strategy.
+3. **Connect tools (optional)** — Hook up Slack and Google Drive MCPs for agents that pull live data.
 4. **Run the setup script** — `./scripts/setup.sh --copy` generates your personalized rules, agents, skills, and deploys them.
 5. **Restart Cursor** — Changes load from `~/.cursor/`.
+
+Run the onboarding agent in Cursor (say **"onboard"** or **"PM-OS setup"**) for interactive Q&A, or edit `config/pm-os-config.yaml` manually using the questions below.
 
 ---
 
@@ -27,68 +29,9 @@ PM-OS is structured as an operating system with four layers:
 
 ---
 
-## Step 0: Prerequisites & MCP Setup
-
-### What works out of the box (no MCP needed)
-
-These skills work immediately after onboarding — no external integrations required:
-
-| Skill | What it does |
-|-------|--------------|
-| prd-writer | PRD creation with governance framework |
-| working-backwards | PR/FAQ, press release, customer-first planning |
-| brainstorming | Structured ideation — turn vague ideas into plans |
-| writing-clearly | Clear, concise writing for all PM artifacts |
-| pptx-creator | Professional PowerPoint creation |
-| action-item-prioritizer | Prioritize tasks against strategic goals |
-| strategy-connector | Map any work to OKRs and strategy pillars |
-| experiment-designer | Hypothesis → experiment design → decision criteria |
-| launch-readiness | Launch checklists and go/no-go recommendations |
-| launch-post | Slack-native launch announcements |
-| exec-communicator | Executive updates, escalations, decision requests |
-| stakeholder-update | Concise status updates for leadership |
-| one-pager | Feature one-pagers — lighter than a PRD |
-| experiment-writeup | Structured experiment results writeup |
-| meeting-to-actions | Turn meeting notes into prioritized action items |
-| **strategy-reviewer** (agent) | Reviews PRDs and specs for strategic alignment |
-
-### What needs MCP setup (optional — adds superpowers)
-
-These **agents** integrate with external tools via MCP. They're optional — skip them if you don't use Slack or Google Drive.
-
-| Agent | Requires | What it does |
-|-------|----------|--------------|
-| **voc-analyzer** | Slack MCP | Analyzes customer feedback from a Slack channel |
-| **weekly-planner** | Slack MCP + Google Drive MCP | Daily/weekly planning from Google Docs + Slack |
-| **exec-update-generator** | Slack MCP + Google Drive MCP (optional) | Auto-generates leadership status updates |
-
-### How to set up MCPs
-
-MCPs (Model Context Protocol servers) connect Cursor to external tools. Each user connects **their own** accounts — no shared credentials, no API keys to manage.
-
-**Slack MCP:**
-1. Open Cursor → **Settings → MCP** (or **Features → MCP**)
-2. Add the Slack MCP server and authorize with your Slack workspace
-3. Verify: in Cursor chat, ask "search Slack for recent messages" — if it works, you're set
-
-**Google Drive MCP:**
-1. Open Cursor → **Settings → MCP**
-2. Add the Google Drive MCP server and authorize with your Google account
-3. Verify: in Cursor chat, ask "list my recent Google Docs" — if it works, you're set
-
-**Other MCPs (all optional):**
-
-| MCP | What it enables |
-|-----|-----------------|
-| **Jira** | Agents can read/write Jira tickets |
-| **Figma** | Design-to-code workflows |
-| **Databricks** | Data analysis agents |
-
-> **Don't have these tools?** No problem. Skip the MCP steps and the agents that require them. All 15+ skills work without any MCP.
-
----
-
 ## Part 1: Identity & Role
+
+> **Start here.** Your identity and domain context are what make PM-OS useful. Everything else is optional.
 
 ### Q1. What's your role and product focus?
 
@@ -146,47 +89,13 @@ These goals are used by: action-item-prioritizer, strategy-connector, exec-updat
 
 ---
 
-## Part 3: Tools & Data Sources
+## Part 3: Domain Context
 
-### Q5. Which tools do you use?
+> **This is the most impactful part of onboarding.** The more context you provide here, the better every skill and agent performs.
 
-| Tool | Use it? (Y/N) | Notes |
-|------|----------------|-------|
-| **Slack** | | Required for VOC analyzer, weekly planner, exec-update-generator |
-| **Google Drive/Docs** | | Required for weekly planner, exec-update-generator |
-| **Jira** | | Optional: Jira MCP for agents |
-| **Figma** | | Optional: design-to-code skills |
-| **Databricks** | | Optional: data agents |
+### Q5. What's your product domain?
 
----
-
-### Q6. Slack configuration (if you use Slack)
-
-| Question | Your answer | What it affects |
-|----------|-------------|-----------------|
-| **VOC / feedback channel** (e.g., #product-feedback) | | VOC analyzer agent — which channel to search |
-| **Slack DM recipient** for daily plans (user ID or handle) | | Weekly planner — where to send plans |
-| **Channel ID** (optional; if known) | | VOC agent query |
-
-**Example:** `#product-feedback | W012WHKRA4C | C02A5A7D9U5`
-
----
-
-### Q7. Google Drive / planning docs (if you use them)
-
-| Question | Your answer | What it affects |
-|----------|-------------|-----------------|
-| **Monday Planning doc ID** (weekly goals) | | Weekly planner — reads goals |
-| **Daily Standup doc ID** (append plans) | | Weekly planner — reads/writes |
-| **PMO / status sheet URL** (optional) | | Weekly planner — project status |
-
----
-
-## Part 4: Domain Context
-
-### Q8. What's your product domain?
-
-This is the most important section for making PM-OS useful. You can either **fill in the fields below** or **provide a strategy doc URL** and the onboarding agent will extract the context for you.
+You can either **fill in the fields below** or **provide a strategy doc URL** and the onboarding agent will extract the context for you.
 
 | Question | Your answer | What it affects |
 |----------|-------------|-----------------|
@@ -209,7 +118,7 @@ This is the most important section for making PM-OS useful. You can either **fil
 
 If you have a strategy doc (Google Doc, wiki, markdown), provide the URL in `domain.strategy_doc_url` in the config. The onboarding agent will read it and populate the domain fields automatically.
 
-### Q8b. Customize the knowledge layer (optional)
+### Q5b. Customize the knowledge layer (optional)
 
 The `knowledge/` directory holds strategy and domain docs that agents and rules reference. Create a folder for your domain (e.g., `knowledge/my-product/`) with any of these:
 
@@ -223,6 +132,62 @@ The `knowledge/` directory holds strategy and domain docs that agents and rules 
 | `key-learnings.md` | Recent experiment results, learnings, focus shifts |
 
 **Tip:** Start with `strategy.md` and `customer-segments.md` — these have the biggest impact on skill quality. Update quarterly.
+
+---
+
+## Part 4: Tools & Integrations (optional)
+
+> **All 15+ skills work without any integrations.** This section is only needed if you want the 3 agents that pull live data from Slack and Google Drive.
+
+### Q6. Which tools do you use?
+
+| Tool | Use it? (Y/N) | Notes |
+|------|----------------|-------|
+| **Slack** | | Needed for VOC analyzer, weekly planner, exec-update-generator |
+| **Google Drive/Docs** | | Needed for weekly planner, exec-update-generator |
+| **Jira** | | Optional: Jira MCP for agents |
+| **Figma** | | Optional: design-to-code skills |
+| **Databricks** | | Optional: data agents |
+
+### Q7. Slack configuration (if you use Slack)
+
+| Question | Your answer | What it affects |
+|----------|-------------|-----------------|
+| **VOC / feedback channel** (e.g., #product-feedback) | | VOC analyzer agent — which channel to search |
+| **Slack DM recipient** for daily plans (user ID or handle) | | Weekly planner — where to send plans |
+| **Channel ID** (optional; if known) | | VOC agent query |
+
+**Example:** `#product-feedback | W012WHKRA4C | C02A5A7D9U5`
+
+### Q8. Google Drive / planning docs (if you use them)
+
+| Question | Your answer | What it affects |
+|----------|-------------|-----------------|
+| **Monday Planning doc ID** (weekly goals) | | Weekly planner — reads goals |
+| **Daily Standup doc ID** (append plans) | | Weekly planner — reads/writes |
+| **PMO / status sheet URL** (optional) | | Weekly planner — project status |
+
+### How to set up MCPs
+
+MCPs (Model Context Protocol servers) connect Cursor to external tools. Each user connects **their own** accounts — no shared credentials, no API keys to manage.
+
+**Slack MCP:**
+1. Open Cursor → **Settings → MCP** (or **Features → MCP**)
+2. Add the Slack MCP server and authorize with your Slack workspace
+3. Verify: in Cursor chat, ask "search Slack for recent messages" — if it works, you're set
+
+**Google Drive MCP:**
+1. Open Cursor → **Settings → MCP**
+2. Add the Google Drive MCP server and authorize with your Google account
+3. Verify: in Cursor chat, ask "list my recent Google Docs" — if it works, you're set
+
+**Other MCPs (all optional):**
+
+| MCP | What it enables |
+|-----|-----------------|
+| **Jira** | Agents can read/write Jira tickets |
+| **Figma** | Design-to-code workflows |
+| **Databricks** | Data analysis agents |
 
 ---
 
